@@ -7,7 +7,7 @@
       <p class="text-xl text-gray-600">Seamlessly integrate EZCater with Nutshell</p>
     </header>
     <div class="flex flex-col items-center space-y-4">
-      <router-link to="/signup" class="btn-primary">Create Account</router-link>
+      <router-link to="/sign-up" class="btn-primary">Create Account</router-link>
       <router-link to="/login" class="btn-secondary">Log In</router-link>
     </div>
     <!-- Additional sections like features or testimonials could go here -->

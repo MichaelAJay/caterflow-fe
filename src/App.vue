@@ -1,21 +1,17 @@
 <script setup lang="ts">
-import { useAuthStore } from './stores/auth';
-import Visitor from './views/visitor/Visitor.vue';
-import User from './views/user/User.vue';
-import { onMounted } from 'vue';
+import { useAuthStore } from './stores/auth'
+import { onMounted } from 'vue'
 
-const authStore = useAuthStore();
+const authStore = useAuthStore()
 
 onMounted(() => {
-  authStore.initializeClient();
+  authStore.initializeClient()
 })
 </script>
 
-
 <template>
   <div>
-    <Visitor v-if="!authStore.isAuthenticated" />
-    <User v-else />
+    <RouterView />
   </div>
 </template>
 
