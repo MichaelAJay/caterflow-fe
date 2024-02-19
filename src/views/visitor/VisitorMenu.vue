@@ -7,6 +7,13 @@ const isMenuOpen = ref(false)
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
+
+defineProps({
+  goToSignUp: {
+    type: Function as unknown as () => (payload: MouseEvent) => void,
+    required: true
+  }
+})
 </script>
 
 <template>
@@ -23,14 +30,16 @@ const toggleMenu = () => {
           <!-- Desktop Menu Items -->
           <a href="#features" class="hover:underline">Features</a>
           <a href="#pricing" class="hover:underline">Pricing</a>
-          <a href="/sign-up" class="bg-blue-500 px-4 py-2 rounded">Get Started</a>
+          <a @click="goToSignUp" class="bg-blue-500 px-4 py-2 rounded">Get Started</a>
         </div>
       </div>
       <div :class="{ hidden: !isMenuOpen }" class="md:hidden">
         <!-- Mobile Menu Items -->
         <a href="#features" class="block p-2 hover:bg-gray-700">Features</a>
         <a href="#pricing" class="block p-2 hover:bg-gray-700">Pricing</a>
-        <a href="/sign-up" class="block p-2 text-center bg-blue-500 mt-2 rounded">Get Started</a>
+        <a @click="goToSignUp" class="block p-2 text-center bg-blue-500 mt-2 rounded"
+          >Get Started</a
+        >
       </div>
     </nav>
   </div>

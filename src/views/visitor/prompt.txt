@@ -1,3 +1,6 @@
+I'm building a web application with Vue. I have two CTAs (one from the primary visitor screen, and one from the main visitor menu) to "Get Started" - which is the account creation process.
+
+
 ``` VisitorHome.vue```
 <script setup lang="ts">
 import VisitorMenu from './VisitorMenu.vue';
@@ -72,10 +75,3 @@ const toggleMenu = () => {
     </div>
   </template>
 ```end VisitorMenu.vue```
-
-Here is the VisitorHome and VisitorMenu components.
-The UI has a space for the svg - but I'm not seeing it.
-The div that encloses the button has height 22.5 px,
-but the button is 0 x 0, and so is the svg. The viewBox on the svg is "0 0 24 24".
-
-Any thoughts?

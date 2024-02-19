@@ -13,7 +13,7 @@ const goToSignUp = () => {
 <template>
   <div>
     <nav class="flex justify-end items-center">
-      <VisitorMenu />
+      <VisitorMenu :goToSignUp="goToSignUp" />
     </nav>
 
     <section class="text-center p-8">
