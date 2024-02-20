@@ -7,7 +7,7 @@
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   font-weight: normal;
 }
 
@@ -25,12 +25,31 @@ a,
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
+  #app {
+    padding: 2rem;
+  }
+  
   body {
     display: flex;
     place-items: center;
   }
+}
 
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Tablet-specific styles */
+  .button, .touch-target {
+    min-width: 44px; /* Ensuring touch targets are large enough */
+    padding: 12px 24px;
+  }
+
+  body, p, .text {
+    font-size: 1.1rem; /* Slightly larger text */
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 1025px) {
   #app {
     display: grid;
     grid-template-columns: 1fr 1fr;

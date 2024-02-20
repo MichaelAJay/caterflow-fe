@@ -5,13 +5,12 @@ import VisitorMenu from './VisitorMenu.vue'
 const router = useRouter()
 
 const goToSignUp = () => {
-  console.log('boop')
   router.push({ name: 'SignUp' })
 }
 </script>
 
 <template>
-  <div>
+  <div id="visitor-home-container">
     <nav class="flex justify-end items-center">
       <VisitorMenu :goToSignUp="goToSignUp" />
     </nav>
