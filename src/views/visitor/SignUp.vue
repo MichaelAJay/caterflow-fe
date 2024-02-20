@@ -62,15 +62,18 @@ export default {
       passwordVisible.value = !passwordVisible.value
     }
 
-    const submitForm = async () => {
+    const handleSignUp = async () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { 'password-confirm': _, ...requestBody } = { ...form.value }
       try {
+        // Add Auth0 flow BEFORE request to my api here
+
+        // After Auth0, make request to my api, as below
         await createAccount(requestBody)
       } catch (err: any) {
         console.error('submitForm catch', err.message)
         showError.value = true
-        errorMessage.value = err.message || 'An error occured during account creation.'
+        errorMessage.value = err.message || 'An error occurred during account creation.'
       }
     }
 
@@ -78,7 +81,7 @@ export default {
 
     return {
       form,
-      submitForm,
+      submitForm: handleSignUp,
       validPasswordError,
       matchPasswordError,
       checks,

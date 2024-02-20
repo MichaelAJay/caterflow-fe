@@ -29,7 +29,7 @@ a,
   #app {
     padding: 2rem;
   }
-  
+
   body {
     display: flex;
     place-items: center;
@@ -38,12 +38,15 @@ a,
 
 @media (min-width: 768px) and (max-width: 1024px) {
   /* Tablet-specific styles */
-  .button, .touch-target {
+  .button,
+  .touch-target {
     min-width: 44px; /* Ensuring touch targets are large enough */
     padding: 12px 24px;
   }
 
-  body, p, .text {
+  body,
+  p,
+  .text {
     font-size: 1.1rem; /* Slightly larger text */
     line-height: 1.6;
   }

@@ -1,6 +1,7 @@
 import { Auth0Client, createAuth0Client } from '@auth0/auth0-spa-js'
 import { defineStore } from 'pinia'
 import router from '../router'
+import { getAuth0Client } from '@/services/auth0Service'
 
 interface AuthState {
   auth0Client: Auth0Client | null
@@ -18,13 +19,7 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     async initializeClient() {
-      this.auth0Client = await createAuth0Client({
-        domain: import.meta.env.VITE_AUTH0_DOMAIN,
-        clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
-        authorizationParams: {
-          redirect_uri: window.location.origin
-        }
-      })
+      this.auth0Client = await getAuth0Client();
       try {
         this.isAuthenticated = await this.auth0Client.isAuthenticated()
         if (this.isAuthenticated) {
