@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     async initializeClient() {
-      this.auth0Client = await getAuth0Client();
+      this.auth0Client = await getAuth0Client()
       try {
         this.isAuthenticated = await this.auth0Client.isAuthenticated()
         if (this.isAuthenticated) {

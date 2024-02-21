@@ -8,8 +8,6 @@ const axiosInstance: AxiosInstance = axios.create({
 
 export async function createAccount(data: ICreateAccountPayload) {
   try {
-    
-
     await axiosInstance.post('/account', data)
   } catch (err) {
     console.error('axios error')
