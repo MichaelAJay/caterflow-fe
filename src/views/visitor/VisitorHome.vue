@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import VisitorMenu from './VisitorMenu.vue'
+import { signup } from '@/services/auth0Service'
 
-const router = useRouter()
-
-const goToSignUp = () => {
-  router.push({ name: 'SignUp' })
+const goToSignUp = async () => {
+  try {
+    await signup('http://localhost:5173')
+  } catch (err) {
+    console.error('Error in VisitorHome.loginUser', err)
+  }
 }
 </script>
 

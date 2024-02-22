@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import { useAuthStore } from './stores/auth'
-import { onMounted } from 'vue'
-
-const authStore = useAuthStore()
-
-onMounted(() => {
-  authStore.initializeClient()
-})
-</script>
-
 <template>
   <div id="router-view-container" class="bg-black">
     <RouterView />
