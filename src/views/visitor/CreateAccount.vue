@@ -1,10 +1,22 @@
 <script lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import ErrorAlert from '@/components/ErrorAlert.vue'
+import { handleAuth0RedirectCallback, shouldHandleAuth0RedirectCallback } from '@/services/auth0Service'
 
 export default {
   components: { ErrorAlert },
   setup(props, { emit }) {
+    onMounted(() => {
+      if (shouldHandleAuth0RedirectCallback()) {
+        handleAuth0RedirectCallback()
+          .then(() => {
+            console.log('Success')
+          })
+          .catch((reason) => console.error('Failure in CreateAccount onMounted', reason))
+      }
+      // Otherwise, do nothing.
+    })
+
     const form = ref({
       name: ''
     })
@@ -13,19 +25,19 @@ export default {
     const errorMessage = ref('')
 
     const checks = computed(() => ({
-        nameNotEmpty: form.value.name.trim() !== ''
+      nameNotEmpty: form.value.name.trim() !== ''
     }))
 
     const handleCreateAccount = async () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    //   const { 'password-confirm': _, ...requestBody } = { ...form.value }
+      //   const { 'password-confirm': _, ...requestBody } = { ...form.value }
       try {
         // Add Auth0 flow BEFORE request to my api here
 
         // After Auth0, make request to my api, as below
         // await createAccount(requestBody)
         console.log('handle create account')
-        emit('complete');
+        emit('complete')
       } catch (err: any) {
         console.error('submitForm catch', err.message)
         showError.value = true

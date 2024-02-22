@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
-  <div>User</div>
+  <div>User Landing Page</div>
 </template>
