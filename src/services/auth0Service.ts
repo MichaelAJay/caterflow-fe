@@ -54,17 +54,12 @@ export const shouldHandleAuth0RedirectCallback = () => {
 export const handleAuth0RedirectCallback = async () => {
   try {
     const auth0Client = await getAuth0Client()
-    console.log('handleAuth0RedirectCallback after getAuth0Client')
     await auth0Client.handleRedirectCallback()
-    console.log('handleAuth0RedirectCallback after handleRedirectCallback')
     await setAuthStore(auth0Client)
 
     // Clear auth query params
     const newUrl = window.location.pathname
-    console.log('newUrl', newUrl)
     window.history.replaceState(null, '', newUrl)
-
-    console.log('Handled')
   } catch (err) {
     // If a page is refreshed
 
