@@ -61,10 +61,6 @@ export const handleAuth0RedirectCallback = async () => {
     const newUrl = window.location.pathname
     window.history.replaceState(null, '', newUrl)
   } catch (err) {
-    // If a page is refreshed
-
-    // eslint-disable-next-line no-debugger
-    debugger
     console.error('Error handling Auth0 redirect callback:', err)
     router.push({ name: 'home' })
   }
@@ -79,13 +75,26 @@ export const handleInitialAuthentication = async () => {
   }
 }
 
+/**
+ * should not look in store for token
+ * should not login automatically
+ */
 export const getAuthToken = async (redirectUri?: string) => {
-  let auth0Client
+  let auth0Client;
   try {
     auth0Client = await getAuth0Client()
-    await setAuthStore(auth0Client)
+    const timeA = Date.now();
+    const token = await auth0Client.getTokenSilently({ cacheMode: 'off' })
+    console.log('getTokenSilently time', Date.now() - timeA, token)
+    if (token) return token;
+
+    // await setAuthStore(auth0Client)
+
+    // This probably won't work the way I want it to because I don't think I have setAuthStore throwing an error if client isn't authed
   } catch (err) {
     console.error('Error obtaining token silently', err)
+
+    // NOTE! This is going to require some special care.
     if (auth0Client) {
       if (redirectUri) {
         await auth0Client.loginWithRedirect({ authorizationParams: { redirect_uri: redirectUri } })
@@ -100,7 +109,7 @@ export const getAuthToken = async (redirectUri?: string) => {
 /**
  * If the client is not logged in, this will fail gracefully. State will not be set, but the error will be handled (ignored)
  */
-const setAuthStore = async (auth0Client: Auth0Client) => {
+const setAuthStore = async (auth0Client: Auth0Client, attemptLoginIfRequired = false, redirectUri?: string) => {
   try {
     const authStore = useAuthStore()
     const token = await auth0Client.getTokenSilently()
@@ -110,10 +119,13 @@ const setAuthStore = async (auth0Client: Auth0Client) => {
     authStore.setIsAuthenticated()
     console.log('auth store set')
   } catch (err: any) {
-    // Throw any error that is NOT 'login_required'
-    if (err.error !== 'login_required') {
-      console.error('setTokenAndUser error', err.message)
-      throw err
+    const loginRequiredError = 'login_required'
+
+    if (err.error === loginRequiredError && attemptLoginIfRequired) {
+      // Log in
+    } else if (err.error !== loginRequiredError) {
+      console.error('SetTokenAndUser error', err.message);
+      throw err;
     }
     // If err.error IS 'login_required', this is the expected case when a user is not logged in
     // It may be ignored

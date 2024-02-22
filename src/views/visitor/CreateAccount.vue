@@ -7,6 +7,7 @@ export default {
   components: { ErrorAlert },
   setup(props, { emit }) {
     onMounted(() => {
+      console.log('In CreateAccount onMounted')
       if (shouldHandleAuth0RedirectCallback()) {
         handleAuth0RedirectCallback()
           .then(() => {

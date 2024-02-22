@@ -10,9 +10,8 @@ import { handleInitialAuthentication } from './services/auth0Service'
 const app = createApp(App)
 
 app.use(createPinia())
+// Attempt to refresh or retieve tokens silently on app startup
+await handleInitialAuthentication()
 app.use(router)
 
 app.mount('#app')
-
-// Attempt to refresh or rerieve tokens silently on app startup
-await handleInitialAuthentication()

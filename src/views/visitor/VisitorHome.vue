@@ -4,7 +4,7 @@ import { signup } from '@/services/auth0Service'
 
 const goToSignUp = async () => {
   try {
-    await signup('http://localhost:5173/create-account')
+    await signup('http://localhost:5173')
   } catch (err) {
     console.error('Error in VisitorHome.loginUser', err)
   }

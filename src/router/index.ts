@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import VisitorHome from '../views/visitor/VisitorHome.vue'
+import VisitorUserSwitch from '@/components/VisitorUserSwitch.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: VisitorHome
+      component: VisitorUserSwitch
     },
     {
       path: '/about',
@@ -23,6 +23,16 @@ const router = createRouter({
       path: '/dashboard',
       name: 'Dashboard',
       component: () => import('@/views/user/UserHome.vue')
+    },
+    {
+      path: '/get-started',
+      name: 'VisitorHome',
+      component: () => import('@/views/visitor/VisitorHome.vue')
+    },
+    {
+      path: '/verify-email',
+      name: 'Verify Email',
+      component: () => import('@/views/user/VerifyEmail.vue')
     }
   ]
 })
