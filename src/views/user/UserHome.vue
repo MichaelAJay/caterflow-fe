@@ -1,5 +1,5 @@
 <script lang="ts">
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
 
 export default {
   setup() {

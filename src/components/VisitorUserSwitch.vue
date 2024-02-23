@@ -8,12 +8,11 @@ export default {
     onMounted(async () => {
       console.log('Mounted VisitorUserSwitch')
       const authStore = useAuthStore()
-      const user = authStore.user;
-      let componentToPush = 'VisitorHome';
+      const user = authStore.user
+      let componentToPush = 'VisitorHome'
       if (user) {
         componentToPush = user.email_verified ? 'Dashboard' : 'Verify Email'
       }
-
 
       console.log('VisitorUserSwitch to', componentToPush)
       router.push({ name: componentToPush })

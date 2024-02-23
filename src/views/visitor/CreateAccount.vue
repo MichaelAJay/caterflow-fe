@@ -1,7 +1,10 @@
 <script lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import ErrorAlert from '@/components/ErrorAlert.vue'
-import { handleAuth0RedirectCallback, shouldHandleAuth0RedirectCallback } from '@/services/auth0Service'
+import {
+  handleAuth0RedirectCallback,
+  shouldHandleAuth0RedirectCallback
+} from '@/services/auth0Service'
 
 export default {
   components: { ErrorAlert },
