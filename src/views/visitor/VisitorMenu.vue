@@ -12,6 +12,10 @@ defineProps({
   goToSignUp: {
     type: Function as unknown as () => (payload: MouseEvent) => void,
     required: true
+  },
+  goToLogin: {
+    type: Function as unknown as () => (payload: MouseEvent) => void,
+    required: true
   }
 })
 </script>
@@ -38,8 +42,9 @@ defineProps({
         <a href="#features" class="block p-2 hover:bg-gray-700">Features</a>
         <a href="#pricing" class="block p-2 hover:bg-gray-700">Pricing</a>
         <a @click="goToSignUp" class="block p-2 text-center bg-blue-500 mt-2 rounded"
-          >Get Started</a
-        >
+          >Get Started
+        </a>
+        <a @click="goToLogin" class="block p-2 text-center bg-blue-500 mt-2 rounded"> Login </a>
       </div>
     </nav>
   </div>

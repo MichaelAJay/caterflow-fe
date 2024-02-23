@@ -5,6 +5,7 @@ import { ensureInView } from '../../utility/functions/useEnsureVisible'
 import { createAccount } from '@/services/apiService'
 import ErrorAlert from '@/components/ErrorAlert.vue'
 import { signUpUser, updateUser } from '@/services/firestoreAuth'
+import { passwordRules } from '@/views/visitor/utility/password-rules.const'
 
 export default {
   components: { CheckCircleIcon, XCircleIcon, EyeIcon, EyeSlashIcon, ErrorAlert },
@@ -51,14 +52,6 @@ export default {
     const showError = ref(false)
     const errorMessage = ref('')
 
-    const passwordRules = {
-      minLength: 8,
-      hasNumber: /\d/,
-      hasUpper: /[A-Z]/,
-      hasLower: /[a-z]/,
-      hasSpecial: /[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/
-    }
-
     const togglePasswordVisibility = () => {
       passwordVisible.value = !passwordVisible.value
     }
@@ -67,9 +60,9 @@ export default {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { email, password, name: businessName, owner: userName } = { ...form.value }
       try {
-        await signUpUser(email, password);
-        await updateUser({ displayName: userName });
-        await createAccount(businessName);
+        await signUpUser(email, password)
+        await updateUser({ displayName: userName })
+        await createAccount(businessName)
       } catch (err: any) {
         console.error('submitForm catch', err.message)
         showError.value = true
@@ -81,7 +74,7 @@ export default {
 
     return {
       form,
-      submitForm: handleSignUp,
+      handleSignUp,
       validPasswordError,
       matchPasswordError,
       checks,
@@ -101,7 +94,7 @@ export default {
       <div class="p-6 max-w-md w-full bg-white rounded-xl shadow-md">
         <h1 class="title text-2xl font-bold mb-2">Welcome to CaterBot!</h1>
         <p class="mb-4 text-gray-600">Try me out! Your first ten transfers are free!</p>
-        <form @submit.prevent="submitForm" class="space-y-4">
+        <form @submit.prevent="handleSignUp" class="space-y-4">
           <div>
             <label for="name" class="form-label">Business Name:</label>
             <input id="name" v-model="form.name" type="text" required class="form-input" />

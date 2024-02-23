@@ -1,26 +1,25 @@
 <script lang="ts">
-import { resendEmailVerification } from '@/services/firestoreAuth'
-
+import router from '@/router'
+import { isUserEmailVerified, resendEmailVerification } from '@/services/firestoreAuth'
 
 export default {
   name: 'VerifyEmail',
   setup() {
-    const handleVerifyClick = () => {
-      console.log('Verify button clicked')
-      // Handle verify click event here
+    const handleVerifyClick = async () => {
+      const isVerified = await isUserEmailVerified()
+      console.log('isVerified', isVerified)
+      if (!isVerified) {
+        console.log('WRONG')
+        return
+      }
 
-      /**
-       * Should refetch user
-       * Should check if refetched user.email_verified is true
-       * If it is, should route user to User Dashboard
-       * If it is not, should give some sort of error message - "Hmm - something seems off. Try clicking "Resend Verification", and if you're still having problems, please contact us!"
-       */
+      router.push({ name: 'Dashboard' })
     }
 
     const handleResendClick = async () => {
       console.log('Resend button clicked')
       // Handle resend click event here
-      await resendEmailVerification();
+      await resendEmailVerification()
     }
 
     return {
