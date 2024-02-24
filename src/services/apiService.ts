@@ -14,9 +14,9 @@ axiosInstance.interceptors.request.use(async (config) => {
   return config
 })
 
-export const createAccount = async (businessName: string) => {
+export const createAccount = async (name: string) => {
   try {
-    await axiosInstance.post('/account', { businessName })
+    await axiosInstance.post('/account', { name })
   } catch (err) {
     console.error('axios error', err)
     throw err

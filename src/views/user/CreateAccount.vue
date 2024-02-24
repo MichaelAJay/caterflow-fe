@@ -1,11 +1,17 @@
 <script lang="ts">
 import { computed, ref } from 'vue'
 import ErrorAlert from '@/components/ErrorAlert.vue'
-
+import { createAccount } from '@/services/apiService'
+import AccountCreatedModal from './AccountCreatedModal.vue'
 
 export default {
-  components: { ErrorAlert },
-  setup(props, { emit }) {
+  components: { ErrorAlert, AccountCreatedModal },
+  setup() {
+    const showModal = ref(false)
+    const closeModal = () => {
+      showModal.value = false
+    }
+
     const form = ref({
       name: ''
     })
@@ -19,14 +25,11 @@ export default {
 
     const handleCreateAccount = async () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      //   const { 'password-confirm': _, ...requestBody } = { ...form.value }
       try {
-        // Add Auth0 flow BEFORE request to my api here
-
-        // After Auth0, make request to my api, as below
-        // await createAccount(requestBody)
-        console.log('handle create account')
-        emit('complete')
+        const requestBody = { ...form.value }
+        await createAccount(requestBody.name)
+        console.log('account created')
+        showModal.value = true
       } catch (err: any) {
         console.error('submitForm catch', err.message)
         showError.value = true
@@ -35,6 +38,8 @@ export default {
     }
 
     return {
+      showModal,
+      closeModal,
       form,
       handleCreateAccount,
       errorMessage,
@@ -67,6 +72,7 @@ export default {
       </div>
     </div>
     <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
+    <AccountCreatedModal :show="showModal" :closeModal="closeModal" />
   </div>
 </template>
 
