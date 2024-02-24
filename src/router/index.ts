@@ -38,6 +38,11 @@ const router = createRouter({
       path: '/verify-email',
       name: 'Verify Email',
       component: () => import('@/views/user/VerifyEmail.vue')
+    },
+    {
+      path: '/create-account',
+      name: 'Create Account',
+      component: () => import('@/views/user/CreateAccount.vue')
     }
   ]
 })

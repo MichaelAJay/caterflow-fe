@@ -66,12 +66,10 @@ type FirebaseUserUpdate = {
 }
 export const updateUser = async (updates: FirebaseUserUpdate) => {
   try {
-    let user = getUser(true) as User;
-
-
+    let user = getUser(true) as User
 
     await updateProfile(user, updates)
-    user = getUser(true) as User;
+    user = getUser(true) as User
     return user
   } catch (err) {
     console.error('Update User failed', err)
@@ -105,7 +103,7 @@ export const getAuthToken = async (forceRefresh = false): Promise<string | null>
 
 export const isUserEmailVerified = async () => {
   await refreshUser()
-  const user = getUser(true) as User; 
+  const user = getUser(true) as User
   return user.emailVerified
 }
 

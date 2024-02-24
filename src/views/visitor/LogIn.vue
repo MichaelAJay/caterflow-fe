@@ -44,7 +44,6 @@ export default {
         const apiHealthy = await apiHealthCheck()
         console.log('api is healthy', apiHealthy)
 
-
         const routeName = user.emailVerified ? 'Dashboard' : 'Verify Email'
         router.push({ name: routeName })
       } catch (err: any) {

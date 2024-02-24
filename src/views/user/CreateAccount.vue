@@ -1,26 +1,11 @@
 <script lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import ErrorAlert from '@/components/ErrorAlert.vue'
-import {
-  handleAuth0RedirectCallback,
-  shouldHandleAuth0RedirectCallback
-} from '@/services/auth0Service'
+
 
 export default {
   components: { ErrorAlert },
   setup(props, { emit }) {
-    onMounted(() => {
-      console.log('In CreateAccount onMounted')
-      if (shouldHandleAuth0RedirectCallback()) {
-        handleAuth0RedirectCallback()
-          .then(() => {
-            console.log('Success')
-          })
-          .catch((reason) => console.error('Failure in CreateAccount onMounted', reason))
-      }
-      // Otherwise, do nothing.
-    })
-
     const form = ref({
       name: ''
     })
