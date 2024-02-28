@@ -10,11 +10,6 @@ const router = createRouter({
       component: VisitorUserSwitch
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue')
-    },
-    {
       path: '/sign-up',
       name: 'Sign Up',
       component: () => import('@/views/visitor/SignUp.vue')
@@ -43,6 +38,11 @@ const router = createRouter({
       path: '/create-account',
       name: 'Create Account',
       component: () => import('@/views/user/CreateAccount.vue')
+    },
+    {
+      path: '/integrations',
+      name: 'Integration Home',
+      component: () => import('@/views/user/Integrations/IntegrationHome.vue')
     }
   ]
 })

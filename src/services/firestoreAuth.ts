@@ -32,7 +32,6 @@ const refreshUser = async () => {
 export const signUpUser = async (email: string, password: string): Promise<UserCredential> => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-    console.log('In firestoreAuth signUpUser', userCredential)
     if (userCredential.user) {
       await sendEmailVerification(userCredential.user)
     }

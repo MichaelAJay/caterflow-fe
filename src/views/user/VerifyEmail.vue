@@ -8,18 +8,18 @@ export default {
     const handleVerifyClick = async () => {
       const isVerified = await isUserEmailVerified()
       console.log('isVerified', isVerified)
-      if (!isVerified) {
+      if (isVerified) {
+        router.push({ name: 'Dashboard' })
+      } else {
+        // alert
         console.log('WRONG')
         return
       }
-
-      router.push({ name: 'Dashboard' })
     }
 
     const handleResendClick = async () => {
-      console.log('Resend button clicked')
-      // Handle resend click event here
       await resendEmailVerification()
+      // Modal - "Check your email and then click 'I verified'"
     }
 
     return {

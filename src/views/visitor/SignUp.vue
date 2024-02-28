@@ -2,17 +2,16 @@
 import { ref, watch } from 'vue'
 import { CheckCircleIcon, XCircleIcon, EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
 import { ensureInView } from '../../utility/functions/useEnsureVisible'
-import { createAccount } from '@/services/apiService'
 import ErrorAlert from '@/components/ErrorAlert.vue'
 import { signUpUser, updateUser } from '@/services/firestoreAuth'
 import { passwordRules } from '@/views/visitor/utility/password-rules.const'
+import router from '@/router'
 
 export default {
   components: { CheckCircleIcon, XCircleIcon, EyeIcon, EyeSlashIcon, ErrorAlert },
   setup() {
     const form = ref({
       name: '',
-      owner: '',
       email: '',
       password: '',
       'password-confirm': ''
@@ -58,11 +57,11 @@ export default {
 
     const handleSignUp = async () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { email, password, name: businessName, owner: userName } = { ...form.value }
+      const { email, password, name } = { ...form.value }
       try {
         await signUpUser(email, password)
-        await updateUser({ displayName: userName })
-        await createAccount(businessName)
+        await updateUser({ displayName: name })
+        router.push({ name: 'Verify Email' })
       } catch (err: any) {
         console.error('submitForm catch', err.message)
         showError.value = true
@@ -96,12 +95,8 @@ export default {
         <p class="mb-4 text-gray-600">Try me out! Your first ten transfers are free!</p>
         <form @submit.prevent="handleSignUp" class="space-y-4">
           <div>
-            <label for="name" class="form-label">Business Name:</label>
-            <input id="name" v-model="form.name" type="text" required class="form-input" />
-          </div>
-          <div>
-            <label for="owner" class="form-label">Your Name:</label>
-            <input id="owner" v-model="form.owner" type="text" required class="form-input" />
+            <label for="owner" class="form-label">Name:</label>
+            <input id="owner" v-model="form.name" type="text" required class="form-input" />
           </div>
           <div>
             <label for="email" class="form-label">Email:</label>
