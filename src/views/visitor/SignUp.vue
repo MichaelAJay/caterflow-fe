@@ -6,6 +6,7 @@ import ErrorAlert from '@/components/ErrorAlert.vue'
 import { signUpUser, updateUser } from '@/services/firestoreAuth'
 import { passwordRules } from '@/views/visitor/utility/password-rules.const'
 import router from '@/router'
+import { createUser } from '@/services/apiService'
 
 export default {
   components: { CheckCircleIcon, XCircleIcon, EyeIcon, EyeSlashIcon, ErrorAlert },
@@ -61,7 +62,9 @@ export default {
       try {
         await signUpUser(email, password)
         await updateUser({ displayName: name })
-        router.push({ name: 'Verify Email' })
+        await createUser()
+
+        router.push({ name: 'Onboard Wizard' })
       } catch (err: any) {
         console.error('submitForm catch', err.message)
         showError.value = true

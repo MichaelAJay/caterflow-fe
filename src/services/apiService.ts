@@ -14,6 +14,25 @@ axiosInstance.interceptors.request.use(async (config) => {
   return config
 })
 
+export const createUser = async () => {
+  try {
+    // This method is used to maintain parity with OAuth 2.0 provider and uses the provided token
+    await axiosInstance.post('/user')
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+export const verifyEmail = async () => {
+  try {
+    await axiosInstance.patch('/user/verify-email')
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
 export const createAccount = async (name: string) => {
   try {
     await axiosInstance.post('/account', { name })

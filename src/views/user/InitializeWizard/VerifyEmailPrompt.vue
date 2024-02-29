@@ -1,5 +1,6 @@
 <script lang="ts">
-import { isUserEmailVerified } from '@/services/firestoreAuth'
+import { verifyEmail } from '@/services/apiService'
+import { isUserEmailVerified, resendEmailVerification } from '@/services/firestoreAuth'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -8,6 +9,7 @@ export default defineComponent({
       console.log('User clicked the verification button.')
 
       if (await isUserEmailVerified()) {
+        await verifyEmail()
         emit('complete')
       } else {
         console.error('WEE-OOO WEE-OOO')
@@ -15,8 +17,16 @@ export default defineComponent({
       }
     }
 
+    const handleResendEmailClick = async () => {
+      // Handle case where the user clicks Resend but they're verified.
+
+      console.log('User clicked the resend email button.')
+      // await resendEmailVerification();
+    }
+
     return {
-      handleVerificationConfirmed
+      handleVerificationConfirmed,
+      handleResendEmailClick
     }
   }
 })
@@ -34,6 +44,12 @@ export default defineComponent({
       @click="handleVerificationConfirmed"
     >
       I Verified
+    </button>
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      @click="handleResendEmailClick"
+    >
+      Resend Email
     </button>
   </div>
 </template>

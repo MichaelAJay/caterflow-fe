@@ -96,7 +96,13 @@ export const getAuthToken = async (forceRefresh = false): Promise<string | null>
   const user = auth.currentUser
   if (!user) return null
 
-  const token = user.getIdToken(forceRefresh)
+  let token = await user.getIdToken(forceRefresh)
+  const claims = getDecodedJWTClaims(token)
+
+  if (!claims.email_verified && !forceRefresh) {
+    token = await user.getIdToken(true)
+  }
+
   return token
 }
 
@@ -108,4 +114,20 @@ export const isUserEmailVerified = async () => {
 
 const FirebaseErrorCode = {
   InvalidCredential: 'auth/invalid-credential'
+}
+
+const getDecodedJWTClaims = (token: string) => {
+  const base64Url = token.split('.')[1]
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  const jsonClaims = decodeURIComponent(
+    atob(base64)
+      .split('')
+      .map((c) => {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      })
+      .join('')
+  )
+  const claims = JSON.parse(jsonClaims)
+  console.log('claims', claims)
+  return claims
 }

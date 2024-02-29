@@ -43,6 +43,11 @@ const router = createRouter({
       path: '/integrations',
       name: 'Integration Home',
       component: () => import('@/views/user/Integrations/IntegrationHome.vue')
+    },
+    {
+      path: '/onboard',
+      name: 'Onboard Wizard',
+      component: () => import('@/views/user/InitializeWizard/InitializeWizard.vue')
     }
   ]
 })
