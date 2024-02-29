@@ -12,7 +12,7 @@ export default defineComponent({
         await verifyEmail()
         emit('complete')
       } else {
-        console.error('WEE-OOO WEE-OOO')
+        console.error('User claims they have verified their account, but that is not what the provider says')
         // Create alert modal
       }
     }

@@ -17,6 +17,7 @@ export default defineComponent({
     }
 
     return {
+      businessName,
       handleCreateOrganization
     }
   }
@@ -32,6 +33,7 @@ export default defineComponent({
         >Business Name</label
       >
       <input
+        v-model="businessName"
         id="businessName"
         name="businessName"
         type="text"
