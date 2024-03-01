@@ -1,27 +1,27 @@
 <script lang="ts">
-import { createAccount } from '@/services/apiService'
-import { defineComponent, ref } from 'vue'
+import { createAccount } from '@/services/apiService';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup(_, { emit }) {
-    const businessName = ref('')
+    const businessName = ref('');
 
     const handleCreateOrganization = async () => {
-      console.log('User clicked the Create Organization button.')
+      console.log('User clicked the Create Organization button.');
       try {
-        await createAccount(businessName.value)
-        emit('complete')
+        await createAccount(businessName.value);
+        emit('complete');
       } catch (err) {
-        console.error('Error creating account', err)
+        console.error('Error creating account', err);
       }
-    }
+    };
 
     return {
       businessName,
       handleCreateOrganization
-    }
+    };
   }
-})
+});
 </script>
 
 <template>

@@ -1,5 +1,5 @@
-import { auth } from '@/firebase/init'
-import { FirebaseError } from 'firebase/app'
+import { auth } from '@/firebase/init';
+import { FirebaseError } from 'firebase/app';
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -7,127 +7,128 @@ import {
   updateProfile,
   type User,
   type UserCredential
-} from 'firebase/auth'
+} from 'firebase/auth';
 
 export const getUser = (throwOnNullUser: boolean) => {
-  const user = auth.currentUser
+  const user = auth.currentUser;
   if (user === null && throwOnNullUser) {
-    throw new Error('login_required')
+    throw new Error('login_required');
   }
-  return user
-}
+  return user;
+};
 
 const refreshUser = async () => {
-  const user = getUser(true)
+  const user = getUser(true);
 
   // This check is here only to make TS behave
   // getUser would throw if user was null
   if (user === null) {
-    throw new Error('login_required')
+    throw new Error('login_required');
   }
 
-  await user.reload()
-}
+  await user.reload();
+};
 
 export const signUpUser = async (email: string, password: string): Promise<UserCredential> => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     if (userCredential.user) {
-      await sendEmailVerification(userCredential.user)
+      await sendEmailVerification(userCredential.user);
     }
-    return userCredential
+    return userCredential;
   } catch (err) {
-    console.error('ARGH! signUpUser', err)
-    throw err
+    console.error('ARGH! signUpUser', err);
+    throw err;
   }
-}
+};
 
 export const login = async (email: string, password: string) => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password)
-    return userCredential.user
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential.user;
   } catch (err) {
     if (err instanceof FirebaseError) {
       if (err.code === FirebaseErrorCode.InvalidCredential) {
-        return { failed: 'Invalid username or password' }
+        return { failed: 'Invalid username or password' };
       }
       // Include other FirebaseError handling here as needed
     }
 
-    console.error('Unknown login error', err)
-    throw err
+    console.error('Unknown login error', err);
+    throw err;
   }
-}
+};
 
 type FirebaseUserUpdate = {
-  displayName?: string | null
-  photoURL?: string | null
-}
+  displayName?: string | null;
+  photoURL?: string | null;
+};
 export const updateUser = async (updates: FirebaseUserUpdate) => {
   try {
-    let user = getUser(true) as User
+    let user = getUser(true) as User;
 
-    await updateProfile(user, updates)
-    user = getUser(true) as User
-    return user
+    await updateProfile(user, updates);
+    user = getUser(true) as User;
+    return user;
   } catch (err) {
-    console.error('Update User failed', err)
-    throw err
+    console.error('Update User failed', err);
+    throw err;
   }
-}
+};
 
 export const resendEmailVerification = async () => {
-  const user = auth.currentUser
+  const user = auth.currentUser;
 
   if (!user) {
-    console.warn('No authenticated user found')
+    console.warn('No authenticated user found');
     // @TODO probably create a custom error
-    throw new Error('Login required')
+    throw new Error('Login required');
   }
 
   try {
-    await sendEmailVerification(user)
+    await sendEmailVerification(user);
   } catch (err) {
-    console.error('sendEmailVerification in resendEmailVerification failed', err)
+    console.error('sendEmailVerification in resendEmailVerification failed', err);
   }
-}
+};
 
 export const getAuthToken = async (forceRefresh = false): Promise<string | null> => {
-  const user = auth.currentUser
-  if (!user) return null
+  console.log('getAuthtoken called');
+  const user = auth.currentUser;
+  if (!user) return null;
 
-  let token = await user.getIdToken(forceRefresh)
-  const claims = getDecodedJWTClaims(token)
+  let token = await user.getIdToken(forceRefresh);
+  const claims = getDecodedJWTClaims(token);
 
   if (!claims.email_verified && !forceRefresh) {
-    token = await user.getIdToken(true)
+    token = await user.getIdToken(true);
   }
 
-  return token
-}
+  return token;
+};
 
 export const isUserEmailVerified = async () => {
-  await refreshUser()
-  const user = getUser(true) as User
-  return user.emailVerified
-}
+  await refreshUser();
+  const user = getUser(true) as User;
+  return user.emailVerified;
+};
 
 const FirebaseErrorCode = {
   InvalidCredential: 'auth/invalid-credential'
-}
+};
 
 const getDecodedJWTClaims = (token: string) => {
-  const base64Url = token.split('.')[1]
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   const jsonClaims = decodeURIComponent(
     atob(base64)
       .split('')
       .map((c) => {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       })
       .join('')
-  )
-  const claims = JSON.parse(jsonClaims)
-  console.log('claims', claims)
-  return claims
-}
+  );
+  const claims = JSON.parse(jsonClaims);
+  console.log('claims', claims);
+  return claims;
+};

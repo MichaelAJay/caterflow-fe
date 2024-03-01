@@ -4,4 +4,4 @@ export const passwordRules = {
   hasUpper: /[A-Z]/,
   hasLower: /[a-z]/,
   hasSpecial: /[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/
-}
+};

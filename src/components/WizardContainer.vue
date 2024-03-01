@@ -1,6 +1,6 @@
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
-import Stepper from '@/components/MyStepper.vue'
+import { computed, defineComponent, ref } from 'vue';
+import Stepper from '@/components/MyStepper.vue';
 
 export default defineComponent({
   components: { Stepper },
@@ -15,39 +15,39 @@ export default defineComponent({
     },
     steps: {
       type: Array as () => Array<{
-        name: string
-        component: any
-        events?: Record<string, Function>
-        props?: Record<string, any>
+        name: string;
+        component: any;
+        events?: Record<string, Function>;
+        props?: Record<string, any>;
       }>,
       required: true
     }
   },
   setup(props, { emit }) {
-    const currentStep = ref(0)
+    const currentStep = ref(0);
 
     const nextStep = () => {
       if (currentStep.value < props.steps.length - 1) {
-        console.log('wiz container next step if')
-        currentStep.value++
-        emit('next-step')
+        console.log('wiz container next step if');
+        currentStep.value++;
+        emit('next-step');
       } else {
-        console.log('wiz container next step else')
-        emit('last-step')
+        console.log('wiz container next step else');
+        emit('last-step');
       }
-    }
+    };
 
     const prevStep = () => {
       if (props.allowBackwards && currentStep.value > 0) {
-        currentStep.value--
+        currentStep.value--;
       }
-    }
+    };
 
     const handleStepperNavigation = (stepIndex: number) => {
       if (props.allowStepperNavigation) {
-        currentStep.value = stepIndex
+        currentStep.value = stepIndex;
       }
-    }
+    };
 
     return {
       currentStep,
@@ -56,9 +56,9 @@ export default defineComponent({
       handleStepperNavigation,
       currentStepComponent: computed(() => props.steps[currentStep.value].component),
       isLastStep: computed(() => currentStep.value === props.steps.length - 1)
-    }
+    };
   }
-})
+});
 </script>
 
 <template>

@@ -1,9 +1,9 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'IntegrationsHome'
-})
+});
 </script>
 <template>
   <div class="container mx-auto px-4">

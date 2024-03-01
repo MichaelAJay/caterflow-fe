@@ -11,24 +11,24 @@ export default {
     isVisible(newVal) {
       if (newVal) {
         setTimeout(() => {
-          this.hideError()
-        }, 5000)
+          this.hideError();
+        }, 5000);
       }
     }
   },
   mounted() {
     if (this.isVisible) {
       setTimeout(() => {
-        this.hideError()
-      }, 5000)
+        this.hideError();
+      }, 5000);
     }
   },
   methods: {
     hideError() {
-      this.$emit('update:isVisible', false)
+      this.$emit('update:isVisible', false);
     }
   }
-}
+};
 </script>
 
 <template>

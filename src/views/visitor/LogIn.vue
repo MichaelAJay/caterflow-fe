@@ -1,63 +1,74 @@
 <script lang="ts">
-import { computed, ref } from 'vue'
-import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline'
-import { ensureInView } from '../../utility/functions/useEnsureVisible'
-import ErrorAlert from '@/components/ErrorAlert.vue'
-import { login } from '@/services/firestoreAuth'
-import type { User } from 'firebase/auth'
-import router from '@/router'
-import { apiHealthCheck } from '@/services/apiService'
+import { computed, onMounted, ref } from 'vue';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline';
+import { ensureInView } from '../../utility/functions/useEnsureVisible';
+import ErrorAlert from '@/components/ErrorAlert.vue';
+import { getUser, login } from '@/services/firestoreAuth';
+import type { User } from 'firebase/auth';
+import router from '@/router';
+import { apiLogin } from '@/services/apiService';
+import { useUserStore } from '@/stores/user';
 
 export default {
   components: { EyeIcon, EyeSlashIcon, ErrorAlert },
   setup() {
+    onMounted(async () => {
+      const user = getUser(false);
+      if (user) {
+        router.push({ name: 'Dashboard' });
+      }
+    });
+
     const form = ref({
       email: '',
       password: ''
-    })
+    });
 
     const isInputValid = computed(() => {
-      return form.value.email.trim() !== '' && form.value.password.trim() !== ''
-    })
+      return form.value.email.trim() !== '' && form.value.password.trim() !== '';
+    });
 
-    const passwordVisible = ref(false)
-    const showError = ref(false)
-    const errorMessage = ref('')
+    const passwordVisible = ref(false);
+    const showError = ref(false);
+    const errorMessage = ref('');
 
     const togglePasswordVisibility = () => {
-      passwordVisible.value = !passwordVisible.value
-    }
+      passwordVisible.value = !passwordVisible.value;
+    };
 
     const handleLogin = async () => {
-      const { email, password } = { ...form.value }
+      const userStore = useUserStore();
+
+      const { email, password } = { ...form.value };
       try {
-        const user = await login(email, password)
+        const user = await login(email, password);
 
         // Handle known error
         if (failedLogin(user)) {
-          showError.value = true
-          errorMessage.value = user.failed
-          return
+          showError.value = true;
+          errorMessage.value = user.failed;
+          return;
         }
 
-        console.log(user)
-        const apiHealthy = await apiHealthCheck()
-        console.log('api is healthy', apiHealthy)
+        const { hasAccount: doesUserHaveAccount } = await apiLogin();
+        userStore.setIsOrgMember(doesUserHaveAccount);
 
-        const routeName = user.emailVerified ? 'Dashboard' : 'Verify Email'
-        router.push({ name: routeName })
+        console.log(user);
+
+        const routeName = user.emailVerified ? 'Dashboard' : 'Onboard Wizard';
+        router.push({ name: routeName });
       } catch (err: any) {
-        console.error('submitForm catch', err.message)
-        showError.value = true
-        errorMessage.value = err.message || 'An error occurred during account creation.'
+        console.error('submitForm catch', err.message);
+        showError.value = true;
+        errorMessage.value = err.message || 'An error occurred during account creation.';
       }
 
       function failedLogin(user: User | { failed: string }): user is { failed: string } {
-        return (user as { failed: string }).failed !== undefined
+        return (user as { failed: string }).failed !== undefined;
       }
-    }
+    };
 
-    const focusHandler = () => ensureInView('last-check')
+    const focusHandler = () => ensureInView('last-check');
 
     return {
       form,
@@ -68,9 +79,9 @@ export default {
       togglePasswordVisibility,
       errorMessage,
       showError
-    }
+    };
   }
-}
+};
 </script>
 
 <template>

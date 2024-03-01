@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import VisitorUserSwitch from '@/components/VisitorUserSwitch.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import VisitorUserSwitch from '@/components/VisitorUserSwitch.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +50,6 @@ const router = createRouter({
       component: () => import('@/views/user/InitializeWizard/InitializeWizard.vue')
     }
   ]
-})
+});
 
-export default router
+export default router;

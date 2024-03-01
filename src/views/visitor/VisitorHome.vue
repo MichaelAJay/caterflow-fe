@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import router from '@/router'
-import VisitorMenu from './VisitorMenu.vue'
+import router from '@/router';
+import VisitorMenu from './VisitorMenu.vue';
 
 const goToSignUp = async () => {
   try {
-    router.push({ name: 'Sign Up' })
+    router.push({ name: 'Sign Up' });
   } catch (err) {
-    console.error('Error in VisitorHome.signupuser', err)
+    console.error('Error in VisitorHome.signupuser', err);
   }
-}
+};
 
 const goToLogin = async () => {
   try {
-    router.push({ name: 'Login' })
+    router.push({ name: 'Login' });
   } catch (err) {
-    console.error('Error in VisitorHome.loginUser', err)
+    console.error('Error in VisitorHome.loginUser', err);
   }
-}
+};
 </script>
 
 <template>

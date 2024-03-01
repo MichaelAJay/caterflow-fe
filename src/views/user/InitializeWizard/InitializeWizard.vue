@@ -1,12 +1,12 @@
 <script lang="ts">
-import WizardContainer from '@/components/WizardContainer.vue'
-import { ref, defineComponent } from 'vue'
-import VerifyEmailPrompt from './VerifyEmailPrompt.vue'
-import InitializeOrganization from './InitializeOrganization.vue'
-import AccountInitializedConfirmation from './AccountInitializedConfirmation.vue'
+import WizardContainer from '@/components/WizardContainer.vue';
+import { ref, defineComponent } from 'vue';
+import VerifyEmailPrompt from './VerifyEmailPrompt.vue';
+import InitializeOrganization from './InitializeOrganization.vue';
+import AccountInitializedConfirmation from './AccountInitializedConfirmation.vue';
 
 interface WizardContainerRef {
-  nextStep: () => void
+  nextStep: () => void;
 }
 
 export default defineComponent({
@@ -18,8 +18,8 @@ export default defineComponent({
         component: VerifyEmailPrompt,
         events: {
           complete: () => {
-            console.log('initialization wizard step 1 complete')
-            goToNextStep()
+            console.log('initialization wizard step 1 complete');
+            goToNextStep();
           }
         }
       },
@@ -28,8 +28,8 @@ export default defineComponent({
         component: InitializeOrganization,
         events: {
           complete: () => {
-            console.log('initialization wizard step 2 complete')
-            goToNextStep()
+            console.log('initialization wizard step 2 complete');
+            goToNextStep();
           }
         }
       },
@@ -38,32 +38,32 @@ export default defineComponent({
         component: AccountInitializedConfirmation,
         events: {
           complete: () => {
-            console.log('initialization wizard complete')
-            handleCompletion()
+            console.log('initialization wizard complete');
+            handleCompletion();
           }
         }
       }
-    ])
-    const wizardContainer = ref<WizardContainerRef | null>(null)
+    ]);
+    const wizardContainer = ref<WizardContainerRef | null>(null);
 
     const goToNextStep = () => {
       if (wizardContainer.value) {
-        wizardContainer.value.nextStep()
+        wizardContainer.value.nextStep();
       }
-    }
+    };
 
     const handleCompletion = () => {
-      console.log('Initialize Wizard complete')
-    }
+      console.log('Initialize Wizard complete');
+    };
 
     return {
       steps,
       goToNextStep,
       handleCompletion,
       wizardContainer
-    }
+    };
   }
-})
+});
 </script>
 
 <template>

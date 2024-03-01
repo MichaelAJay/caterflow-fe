@@ -1,23 +1,23 @@
 <script lang="ts">
-import router from '@/router'
-import { defineComponent } from 'vue'
+import router from '@/router';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
     const handleGoToIntegrations = () => {
-      router.push({ name: 'Integration Home' })
-    }
+      router.push({ name: 'Integration Home' });
+    };
 
     const handleGoToDashboard = () => {
-      router.push({ name: 'Dashboard' })
-    }
+      router.push({ name: 'Dashboard' });
+    };
 
     return {
       handleGoToIntegrations,
       handleGoToDashboard
-    }
+    };
   }
-})
+});
 </script>
 <template>
   <div class="container mx-auto px-4">

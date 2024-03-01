@@ -1,7 +1,7 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
-import LargeModal from '@/components/LargeModal.vue'
-import router from '@/router'
+import { defineComponent } from 'vue';
+import LargeModal from '@/components/LargeModal.vue';
+import router from '@/router';
 
 export default defineComponent({
   components: { LargeModal },
@@ -11,16 +11,16 @@ export default defineComponent({
   },
   setup(props) {
     const handleButtonClick = () => {
-      console.log('Create Account Button clicked')
-      router.push({ name: 'Create Account' })
+      console.log('Create Account Button clicked');
+      router.push({ name: 'Create Account' });
       if (props.closeModal) {
-        props.closeModal()
+        props.closeModal();
       }
-    }
+    };
 
-    return { handleButtonClick }
+    return { handleButtonClick };
   }
-})
+});
 </script>
 
 <template>

@@ -1,33 +1,33 @@
 <script lang="ts">
-import router from '@/router'
-import { isUserEmailVerified, resendEmailVerification } from '@/services/firestoreAuth'
+import router from '@/router';
+import { isUserEmailVerified, resendEmailVerification } from '@/services/firestoreAuth';
 
 export default {
   name: 'VerifyEmail',
   setup() {
     const handleVerifyClick = async () => {
-      const isVerified = await isUserEmailVerified()
-      console.log('isVerified', isVerified)
+      const isVerified = await isUserEmailVerified();
+      console.log('isVerified', isVerified);
       if (isVerified) {
-        router.push({ name: 'Dashboard' })
+        router.push({ name: 'Dashboard' });
       } else {
         // alert
-        console.log('WRONG')
-        return
+        console.log('WRONG');
+        return;
       }
-    }
+    };
 
     const handleResendClick = async () => {
-      await resendEmailVerification()
+      await resendEmailVerification();
       // Modal - "Check your email and then click 'I verified'"
-    }
+    };
 
     return {
       handleVerifyClick,
       handleResendClick
-    }
+    };
   }
-}
+};
 </script>
 
 <template>

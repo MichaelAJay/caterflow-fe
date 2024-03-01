@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Bars3Icon } from '@heroicons/vue/24/outline'
+import { ref } from 'vue';
+import { Bars3Icon } from '@heroicons/vue/24/outline';
 
-const isMenuOpen = ref(false)
+const isMenuOpen = ref(false);
 
 const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
-}
+  isMenuOpen.value = !isMenuOpen.value;
+};
 
 defineProps({
   goToSignUp: {
@@ -17,7 +17,7 @@ defineProps({
     type: Function as unknown as () => (payload: MouseEvent) => void,
     required: true
   }
-})
+});
 </script>
 
 <template>

@@ -1,41 +1,45 @@
 <script lang="ts">
-import { computed, ref } from 'vue'
-import ErrorAlert from '@/components/ErrorAlert.vue'
-import { createAccount } from '@/services/apiService'
-import AccountCreatedModal from './AccountCreatedModal.vue'
+import { computed, ref } from 'vue';
+import ErrorAlert from '@/components/ErrorAlert.vue';
+import { createAccount } from '@/services/apiService';
+import AccountCreatedModal from './AccountCreatedModal.vue';
+import { useUserStore } from '@/stores/user';
 
 export default {
   components: { ErrorAlert, AccountCreatedModal },
   setup() {
-    const showModal = ref(false)
+    const showModal = ref(false);
     const closeModal = () => {
-      showModal.value = false
-    }
+      showModal.value = false;
+    };
 
     const form = ref({
       name: ''
-    })
+    });
 
-    const showError = ref(false)
-    const errorMessage = ref('')
+    const showError = ref(false);
+    const errorMessage = ref('');
 
     const checks = computed(() => ({
       nameNotEmpty: form.value.name.trim() !== ''
-    }))
+    }));
 
     const handleCreateAccount = async () => {
+      const userStore = useUserStore();
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       try {
-        const requestBody = { ...form.value }
-        await createAccount(requestBody.name)
-        console.log('account created')
-        showModal.value = true
+        const requestBody = { ...form.value };
+        await createAccount(requestBody.name);
+        console.log('account created');
+        // If createAccount resolves, we can set isOrgMember to true
+        userStore.setIsOrgMember(true);
+        showModal.value = true;
       } catch (err: any) {
-        console.error('submitForm catch', err.message)
-        showError.value = true
-        errorMessage.value = err.message || 'An error occurred during account creation.'
+        console.error('submitForm catch', err.message);
+        showError.value = true;
+        errorMessage.value = err.message || 'An error occurred during account creation.';
       }
-    }
+    };
 
     return {
       showModal,
@@ -45,9 +49,9 @@ export default {
       errorMessage,
       showError,
       checks
-    }
+    };
   }
-}
+};
 </script>
 
 <template>
