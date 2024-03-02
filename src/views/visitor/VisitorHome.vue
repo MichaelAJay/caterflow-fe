@@ -1,28 +1,41 @@
 <script setup lang="ts">
-import VisitorMenu from './VisitorMenu.vue'
-import { signup } from '@/services/auth0Service'
+import router from '@/router';
+import VisitorMenu from './VisitorMenu.vue';
 
 const goToSignUp = async () => {
   try {
-    await signup('http://localhost:5173')
+    router.push({ name: 'Sign Up' });
   } catch (err) {
-    console.error('Error in VisitorHome.loginUser', err)
+    console.error('Error in VisitorHome.signupuser', err);
   }
-}
+};
+
+const goToLogin = async () => {
+  try {
+    router.push({ name: 'Login' });
+  } catch (err) {
+    console.error('Error in VisitorHome.loginUser', err);
+  }
+};
 </script>
 
 <template>
   <div id="visitor-home-container">
     <nav class="flex justify-end items-center">
-      <VisitorMenu :goToSignUp="goToSignUp" />
+      <VisitorMenu :goToSignUp="goToSignUp" :goToLogin="goToLogin" />
     </nav>
 
     <section class="text-center p-8">
       <h1 class="text-4xl font-bold">Simplify Your Catering Management</h1>
       <p class="text-xl mt-4">Integrate EZCater with Nutshell seamlessly</p>
-      <button @click="goToSignUp" class="mt-8 bg-blue-500 text-white py-2 px-4 rounded-lg">
-        Get Started
-      </button>
+      <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+        <button @click="goToSignUp" class="bg-blue-500 text-white py-2 px-4 rounded-lg">
+          Get Started
+        </button>
+        <button @click="goToLogin" class="bg-green-500 text-white py-2 px-4 rounded-lg">
+          Log In
+        </button>
+      </div>
     </section>
 
     <section class="p-4">

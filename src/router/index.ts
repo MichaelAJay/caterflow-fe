@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import VisitorUserSwitch from '@/components/VisitorUserSwitch.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import VisitorUserSwitch from '@/components/VisitorUserSwitch.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,14 +10,14 @@ const router = createRouter({
       component: VisitorUserSwitch
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue')
+      path: '/sign-up',
+      name: 'Sign Up',
+      component: () => import('@/views/visitor/SignUp.vue')
     },
     {
-      path: '/create-account',
-      name: 'CreateAccount',
-      component: () => import('@/views/visitor/CreateAccount.vue')
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/visitor/LogIn.vue')
     },
     {
       path: '/dashboard',
@@ -33,8 +33,23 @@ const router = createRouter({
       path: '/verify-email',
       name: 'Verify Email',
       component: () => import('@/views/user/VerifyEmail.vue')
+    },
+    {
+      path: '/create-account',
+      name: 'Create Account',
+      component: () => import('@/views/user/CreateAccount.vue')
+    },
+    {
+      path: '/integrations',
+      name: 'Integration Home',
+      component: () => import('@/views/user/Integrations/IntegrationHome.vue')
+    },
+    {
+      path: '/onboard',
+      name: 'Onboard Wizard',
+      component: () => import('@/views/user/InitializeWizard/InitializeWizard.vue')
     }
   ]
-})
+});
 
-export default router
+export default router;

@@ -1,60 +1,57 @@
 <script lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import ErrorAlert from '@/components/ErrorAlert.vue'
-import { handleAuth0RedirectCallback, shouldHandleAuth0RedirectCallback } from '@/services/auth0Service'
+import { computed, ref } from 'vue';
+import ErrorAlert from '@/components/ErrorAlert.vue';
+import { createAccount } from '@/services/apiService';
+import AccountCreatedModal from './AccountCreatedModal.vue';
+import { useUserStore } from '@/stores/user';
 
 export default {
-  components: { ErrorAlert },
-  setup(props, { emit }) {
-    onMounted(() => {
-      console.log('In CreateAccount onMounted')
-      if (shouldHandleAuth0RedirectCallback()) {
-        handleAuth0RedirectCallback()
-          .then(() => {
-            console.log('Success')
-          })
-          .catch((reason) => console.error('Failure in CreateAccount onMounted', reason))
-      }
-      // Otherwise, do nothing.
-    })
+  components: { ErrorAlert, AccountCreatedModal },
+  setup() {
+    const showModal = ref(false);
+    const closeModal = () => {
+      showModal.value = false;
+    };
 
     const form = ref({
       name: ''
-    })
+    });
 
-    const showError = ref(false)
-    const errorMessage = ref('')
+    const showError = ref(false);
+    const errorMessage = ref('');
 
     const checks = computed(() => ({
       nameNotEmpty: form.value.name.trim() !== ''
-    }))
+    }));
 
     const handleCreateAccount = async () => {
+      const userStore = useUserStore();
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      //   const { 'password-confirm': _, ...requestBody } = { ...form.value }
       try {
-        // Add Auth0 flow BEFORE request to my api here
-
-        // After Auth0, make request to my api, as below
-        // await createAccount(requestBody)
-        console.log('handle create account')
-        emit('complete')
+        const requestBody = { ...form.value };
+        await createAccount(requestBody.name);
+        console.log('account created');
+        // If createAccount resolves, we can set isOrgMember to true
+        userStore.setIsOrgMember(true);
+        showModal.value = true;
       } catch (err: any) {
-        console.error('submitForm catch', err.message)
-        showError.value = true
-        errorMessage.value = err.message || 'An error occurred during account creation.'
+        console.error('submitForm catch', err.message);
+        showError.value = true;
+        errorMessage.value = err.message || 'An error occurred during account creation.';
       }
-    }
+    };
 
     return {
+      showModal,
+      closeModal,
       form,
       handleCreateAccount,
       errorMessage,
       showError,
       checks
-    }
+    };
   }
-}
+};
 </script>
 
 <template>
@@ -79,6 +76,7 @@ export default {
       </div>
     </div>
     <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
+    <AccountCreatedModal :show="showModal" :closeModal="closeModal" />
   </div>
 </template>
 

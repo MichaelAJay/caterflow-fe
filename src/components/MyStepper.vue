@@ -8,11 +8,11 @@ export default {
   methods: {
     navigateToStep(step: Number) {
       if (this.isNavigable) {
-        this.$emit('navigate', step)
+        this.$emit('navigate', step);
       }
     }
   }
-}
+};
 </script>
 
 <template>

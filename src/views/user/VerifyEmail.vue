@@ -1,26 +1,25 @@
 <script lang="ts">
-import { resendVerificationEmail } from '@/services/apiService';
-
+import router from '@/router';
+import { isUserEmailVerified, resendEmailVerification } from '@/services/firestoreAuth';
 
 export default {
   name: 'VerifyEmail',
   setup() {
-    const handleVerifyClick = () => {
-      console.log('Verify button clicked');
-      // Handle verify click event here
-
-      /**
-       * Should refetch user
-       * Should check if refetched user.email_verified is true
-       * If it is, should route user to User Dashboard
-       * If it is not, should give some sort of error message - "Hmm - something seems off. Try clicking "Resend Verification", and if you're still having problems, please contact us!"
-       */
+    const handleVerifyClick = async () => {
+      const isVerified = await isUserEmailVerified();
+      console.log('isVerified', isVerified);
+      if (isVerified) {
+        router.push({ name: 'Dashboard' });
+      } else {
+        // alert
+        console.log('WRONG');
+        return;
+      }
     };
 
     const handleResendClick = async () => {
-      console.log('Resend button clicked');
-      // Handle resend click event here
-      await resendVerificationEmail();
+      await resendEmailVerification();
+      // Modal - "Check your email and then click 'I verified'"
     };
 
     return {
@@ -32,14 +31,15 @@ export default {
 </script>
 
 <template>
-    <div class="verify-email">
-      <p class="opening-text">
-        It seems your email is not verified yet. Please verify your email to continue. Check your inbox for the verification email.
-      </p>
-      <button class="verify-button" @click="handleVerifyClick">I Verified</button>
-      <button class="resend-button" @click="handleResendClick">Resend verification</button>
-    </div>
-  </template>
+  <div class="verify-email">
+    <p class="opening-text">
+      It seems your email is not verified yet. Please verify your email to continue. Check your
+      inbox for the verification email.
+    </p>
+    <button class="verify-button" @click="handleVerifyClick">I Verified</button>
+    <button class="resend-button" @click="handleResendClick">Resend verification</button>
+  </div>
+</template>
 
 <style scoped>
 .verify-email {
@@ -54,7 +54,8 @@ export default {
   margin-bottom: 1em;
 }
 
-.verify-button, .resend-button {
+.verify-button,
+.resend-button {
   margin-top: 1em;
 }
 </style>

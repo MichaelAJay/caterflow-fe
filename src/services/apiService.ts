@@ -1,56 +1,74 @@
-import type { AxiosInstance } from 'axios'
-import axios from 'axios'
-import { getAuthToken } from './auth0Service'
-import type { AxiosRequestConfig } from 'node_modules/axios/index.cjs'
+import type { AxiosInstance } from 'axios';
+import axios from 'axios';
+import { getAuthToken } from './firestoreAuth';
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL
-})
+});
 
-const sendRequest = async (config: AxiosRequestConfig<any>)  => {
-  const bearerString = `Bearer ${await getBearerToken()}`
-
-  if (config.headers) {
-    config.headers['Authorization'] = bearerString;
-  } else {
-    config.headers = { 'Authorization': bearerString }
+axiosInstance.interceptors.request.use(async (config) => {
+  const token = await getAuthToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
+  return config;
+});
 
-  console.log(bearerString);
-  axiosInstance.request(config as any);
-}
-
-export const resendVerificationEmail = async () => {
+export const createUser = async () => {
   try {
-    await sendRequest({
-      method: 'POST',
-      url: '/user/resend-email',
-    })
+    // This method is used to maintain parity with OAuth 2.0 provider and uses the provided token
+    await axiosInstance.post('/user');
   } catch (err) {
-    console.error('Err in resendVerificationEmail');
+    console.error(err);
     throw err;
   }
-}
+};
 
-export const createAccount = async (businessName: string) => {
+export const verifyEmail = async () => {
   try {
-    await sendRequest({
-      method: 'POST',
-      url: '/account',
-      data: { businessName }
-    })
+    await axiosInstance.patch('/user/verify-email');
   } catch (err) {
-    console.error('axios error', err)
-    throw err
+    console.error(err);
+    throw err;
   }
-}
+};
 
-const getBearerToken = async (redirectUri?: string) => {
+export const createAccount = async (name: string) => {
   try {
-    const bearerToken = await getAuthToken(redirectUri);
-    return bearerToken;
+    await axiosInstance.post('/account', { name });
   } catch (err) {
-    console.error('DOHHH', err)
-    throw err
+    console.error('axios error', err);
+    throw err;
   }
-}
+};
+
+export const apiHealthCheck = async (checkPublicHealth = false) => {
+  try {
+    const url = checkPublicHealth ? '/app/health/public' : '/app/health';
+    await axiosInstance.get(url);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
+export const isUserAssociatedWithAccount = async (): Promise<boolean> => {
+  try {
+    const { data } = await axiosInstance.get('user/account-status');
+    return data && data.hasAccount === true;
+  } catch (err) {
+    console.error('isUserAssociatedWithAccount error', err);
+    return false;
+  }
+};
+
+// May be used to create api user after provider authentication or to determine account status
+export const apiLogin = async () => {
+  try {
+    const { data } = await axiosInstance.post('user/login');
+    return data;
+  } catch (err) {
+    console.error('apiLogin failed', err);
+    throw err;
+  }
+};

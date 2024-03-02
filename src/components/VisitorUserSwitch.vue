@@ -1,23 +1,19 @@
 <script lang="ts">
-import router from '@/router'
-import { useAuthStore } from '@/stores/auth'
-import { onMounted } from 'vue'
+import router from '@/router';
+import { getUser } from '@/services/firestoreAuth';
+import { onMounted } from 'vue';
 
 export default {
   setup() {
     onMounted(async () => {
-      console.log('Mounted VisitorUserSwitch')
-      const authStore = useAuthStore()
-      const user = authStore.user;
+      const user = getUser(false);
       let componentToPush = 'VisitorHome';
+      console.log('user', user);
       if (user) {
-        componentToPush = user.email_verified ? 'Dashboard' : 'Verify Email'
+        componentToPush = user.emailVerified ? 'Dashboard' : 'Verify Email';
       }
-
-
-      console.log('VisitorUserSwitch to', componentToPush)
-      router.push({ name: componentToPush })
-    })
+      router.push({ name: componentToPush });
+    });
   }
-}
+};
 </script>
