@@ -66,7 +66,6 @@ export const isUserAssociatedWithAccount = async (): Promise<boolean> => {
 export const apiLogin = async () => {
   try {
     const { data } = await axiosInstance.post('user/login');
-    console.log('data', data);
     return data;
   } catch (err) {
     console.error('apiLogin failed', err);

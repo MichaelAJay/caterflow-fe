@@ -42,6 +42,8 @@ export default defineComponent({
       />
       <button
         type="submit"
+        :disabled="businessName === ''"
+        :class="{ 'opacity-50 cursor-not-allowed': businessName === '' }"
         class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Create Organization

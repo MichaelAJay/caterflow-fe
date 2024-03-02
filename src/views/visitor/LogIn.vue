@@ -8,10 +8,13 @@ import type { User } from 'firebase/auth';
 import router from '@/router';
 import { apiLogin } from '@/services/apiService';
 import { useUserStore } from '@/stores/user';
+import  FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
 
 export default {
-  components: { EyeIcon, EyeSlashIcon, ErrorAlert },
+  components: { EyeIcon, EyeSlashIcon, ErrorAlert, FinishOnboardingPrompt },
   setup() {
+    const showFinishOnboardingPrompt = ref(false);
+
     onMounted(async () => {
       const user = getUser(false);
       if (user) {
@@ -50,13 +53,29 @@ export default {
           return;
         }
 
-        const { hasAccount: doesUserHaveAccount } = await apiLogin();
-        userStore.setIsOrgMember(doesUserHaveAccount);
+        // This actually needs to change a bit. The flow now will inject a modal at this point if user.email_verified is false
+        console.log('here be user', user);
+        if (!user.emailVerified) {
+          // Open "FinishOnboardingPrompt" modal
+          console.log('Pop up large "Finish Onboarding Prompt" modal');
+          showFinishOnboardingPrompt.value = true;
+        } else {
+          // @TODO uncomment this apiLogin call
+          // const { hasAccount: doesUserHaveAccount } = await apiLogin();
 
-        console.log(user);
+          // In this section, make the apiLogin() request, set the state, then go to dashboard. We'll keep the modal feel for the "Create Account"
+          const { hasAccount: doesUserHaveAccount } = await apiLogin();
+          userStore.setIsOrgMember(doesUserHaveAccount);
+          console.log('routing to Dashboard from Login')
+          router.push({ name: 'Dashboard' });
+        }
 
-        const routeName = user.emailVerified ? 'Dashboard' : 'Onboard Wizard';
-        router.push({ name: routeName });
+        // const { hasAccount: doesUserHaveAccount } = await apiLogin();
+        // userStore.setIsOrgMember(doesUserHaveAccount);
+
+        // This isn't right anymore
+        // const routeName = user.emailVerified ? 'Dashboard' : 'Onboard Wizard';
+        // router.push({ name: routeName });
       } catch (err: any) {
         console.error('submitForm catch', err.message);
         showError.value = true;
@@ -69,6 +88,9 @@ export default {
     };
 
     const focusHandler = () => ensureInView('last-check');
+    const closeModal = () => {
+      showFinishOnboardingPrompt.value = false;
+    }
 
     return {
       form,
@@ -78,6 +100,8 @@ export default {
       passwordVisible,
       togglePasswordVisibility,
       errorMessage,
+      showFinishOnboardingPrompt,
+      closeModal,
       showError
     };
   }
@@ -125,6 +149,7 @@ export default {
         </form>
       </div>
     </div>
+    <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
     <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
   </div>
 </template>
