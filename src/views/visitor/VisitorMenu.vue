@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Bars3Icon } from '@heroicons/vue/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 
 const isMenuOpen = ref(false);
 
@@ -27,7 +27,8 @@ defineProps({
         <div>
           <!-- Hamburger Icon -->
           <button @click="toggleMenu">
-            <Bars3Icon class="h-6 w-6" />
+            <Bars3Icon class="h-6 w-6" v-if="!isMenuOpen" />
+            <XMarkIcon class="h-6 w-6" v-else />
           </button>
         </div>
         <div class="hidden md:flex space-x-4">

@@ -27,8 +27,8 @@ const goToLogin = async () => {
     </nav>
 
     <section class="text-center p-8">
-      <h1 class="text-4xl font-bold">Simplify Your Catering Management</h1>
-      <p class="text-xl mt-4">Integrate EZCater with Nutshell seamlessly</p>
+      <h1>Simplify Your Catering Management</h1>
+      <p>Integrate EZCater with Nutshell seamlessly</p>
       <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
         <CustomButton @click="goToSignUp" type="primary">Get Started</CustomButton>
 
@@ -37,12 +37,12 @@ const goToLogin = async () => {
     </section>
 
     <section class="p-4">
-      <h2 class="text-2xl font-bold">Features</h2>
+      <h2>Features</h2>
       <!-- Features list here -->
     </section>
 
     <section class="p-4">
-      <h2 class="text-2xl font-bold">Testimonials</h2>
+      <h2>Testimonials</h2>
       <!-- Testimonials here -->
     </section>
   </div>
