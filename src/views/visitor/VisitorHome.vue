@@ -31,7 +31,6 @@ const goToLogin = async () => {
       <p>Integrate EZCater with Nutshell seamlessly</p>
       <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
         <CustomButton @click="goToSignUp" type="primary">Get Started</CustomButton>
-
         <CustomButton @click="goToLogin" type="secondary">Log In</CustomButton>
       </div>
     </section>

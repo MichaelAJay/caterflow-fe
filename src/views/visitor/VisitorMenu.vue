@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
+import VisitorMenuItems from '@/components/visitor/VisitorMenuItems.vue';
 
 const isMenuOpen = ref(false);
 
@@ -22,30 +23,26 @@ defineProps({
 
 <template>
   <div>
-    <nav class="bg-gray-800 text-white p-4">
-      <div class="container mx-auto flex justify-end items-center">
-        <div>
-          <!-- Hamburger Icon -->
-          <button @click="toggleMenu">
-            <Bars3Icon class="h-6 w-6" v-if="!isMenuOpen" />
-            <XMarkIcon class="h-6 w-6" v-else />
-          </button>
-        </div>
+    <nav class="relative text-white p-4 bg-gray-800 rounded-xl">
+      <div class="container mx-auto flex justify-between items-center">
+        <!-- Hamburger Icon -->
+        <button @click="toggleMenu">
+          <Bars3Icon class="h-6 w-6" v-if="!isMenuOpen" />
+          <XMarkIcon class="h-6 w-6" v-else />
+        </button>
         <div class="hidden md:flex space-x-4">
           <!-- Desktop Menu Items -->
-          <a href="#features" class="hover:underline">Features</a>
-          <a href="#pricing" class="hover:underline">Pricing</a>
-          <a @click="goToSignUp" class="bg-blue-500 px-4 py-2 rounded">Get Started</a>
+          <VisitorMenuItems :goToSignUp="goToSignUp" :goToLogin="goToLogin" />
         </div>
       </div>
-      <div :class="{ hidden: !isMenuOpen }" class="md:hidden">
+      <div
+        :class="
+          isMenuOpen ? 'absolute right-0 mt-6 p-1 w-48 bg-sage-200 shadow-lg rounded-lg' : 'hidden'
+        "
+        class="md:hidden z-10"
+      >
         <!-- Mobile Menu Items -->
-        <a href="#features" class="block p-2 hover:bg-gray-700">Features</a>
-        <a href="#pricing" class="block p-2 hover:bg-gray-700">Pricing</a>
-        <a @click="goToSignUp" class="block p-2 text-center bg-blue-500 mt-2 rounded"
-          >Get Started
-        </a>
-        <a @click="goToLogin" class="block p-2 text-center bg-blue-500 mt-2 rounded"> Login </a>
+        <VisitorMenuItems :goToSignUp="goToSignUp" :goToLogin="goToLogin" />
       </div>
     </nav>
   </div>
