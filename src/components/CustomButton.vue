@@ -35,7 +35,6 @@ const buttonClasses = computed(() => {
 });
 </script>
 
-
 <template>
   <button :class="buttonClasses" @click="clickHandler">
     <slot></slot>

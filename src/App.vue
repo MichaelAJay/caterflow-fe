@@ -4,7 +4,7 @@ import Footer from './components/AppFooter.vue';
 import { computed } from 'vue';
 
 const route = useRoute();
-const showFooter = computed(() => !route.meta.hideFooter)
+const showFooter = computed(() => !route.meta.hideFooter);
 </script>
 
 <template>
