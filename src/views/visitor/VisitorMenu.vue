@@ -26,7 +26,7 @@ defineProps({
     <nav class="relative text-white p-4 bg-gray-800 rounded-xl">
       <div class="container mx-auto flex justify-between items-center">
         <!-- Hamburger Icon -->
-        <button @click="toggleMenu">
+        <button @click="toggleMenu" class="md:hidden">
           <Bars3Icon class="h-6 w-6" v-if="!isMenuOpen" />
           <XMarkIcon class="h-6 w-6" v-else />
         </button>
