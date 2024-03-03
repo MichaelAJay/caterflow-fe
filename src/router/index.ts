@@ -12,7 +12,8 @@ const router = createRouter({
     {
       path: '/sign-up',
       name: 'Sign Up',
-      component: () => import('@/views/visitor/SignUp.vue')
+      component: () => import('@/views/visitor/SignUp.vue'),
+      meta: { hideFooter: true }
     },
     {
       path: '/login',
@@ -47,7 +48,8 @@ const router = createRouter({
     {
       path: '/onboard',
       name: 'Onboard Wizard',
-      component: () => import('@/views/user/InitializeWizard/InitializeWizard.vue')
+      component: () => import('@/views/user/InitializeWizard/InitializeWizard.vue'),
+      meta: { hideFooter: true }
     }
   ]
 });

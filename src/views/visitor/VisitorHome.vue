@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import router from '@/router';
 import VisitorMenu from './VisitorMenu.vue';
+import CustomButton from '@/components/CustomButton.vue';
 
 const goToSignUp = async () => {
   try {
@@ -29,12 +30,9 @@ const goToLogin = async () => {
       <h1 class="text-4xl font-bold">Simplify Your Catering Management</h1>
       <p class="text-xl mt-4">Integrate EZCater with Nutshell seamlessly</p>
       <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8">
-        <button @click="goToSignUp" class="bg-blue-500 text-white py-2 px-4 rounded-lg">
-          Get Started
-        </button>
-        <button @click="goToLogin" class="bg-green-500 text-white py-2 px-4 rounded-lg">
-          Log In
-        </button>
+        <CustomButton @click="goToSignUp" type="primary">Get Started</CustomButton>
+
+        <CustomButton @click="goToLogin" type="secondary">Log In</CustomButton>
       </div>
     </section>
 
@@ -47,9 +45,5 @@ const goToLogin = async () => {
       <h2 class="text-2xl font-bold">Testimonials</h2>
       <!-- Testimonials here -->
     </section>
-
-    <footer class="p-4 bg-gray-200 mt-8">
-      <!-- Footer content here -->
-    </footer>
   </div>
 </template>
