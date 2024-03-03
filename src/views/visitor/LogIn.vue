@@ -8,7 +8,7 @@ import type { User } from 'firebase/auth';
 import router from '@/router';
 import { apiLogin } from '@/services/apiService';
 import { useUserStore } from '@/stores/user';
-import  FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
+import FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
 
 export default {
   components: { EyeIcon, EyeSlashIcon, ErrorAlert, FinishOnboardingPrompt },
@@ -66,7 +66,7 @@ export default {
           // In this section, make the apiLogin() request, set the state, then go to dashboard. We'll keep the modal feel for the "Create Account"
           const { hasAccount: doesUserHaveAccount } = await apiLogin();
           userStore.setIsOrgMember(doesUserHaveAccount);
-          console.log('routing to Dashboard from Login')
+          console.log('routing to Dashboard from Login');
           router.push({ name: 'Dashboard' });
         }
 
@@ -90,7 +90,7 @@ export default {
     const focusHandler = () => ensureInView('last-check');
     const closeModal = () => {
       showFinishOnboardingPrompt.value = false;
-    }
+    };
 
     return {
       form,

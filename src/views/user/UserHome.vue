@@ -14,7 +14,7 @@ export default {
     };
 
     onMounted(async () => {
-      const user = getUser(true)
+      const user = getUser(true);
       const userStore = useUserStore();
       try {
         let doesUserHaveAccount = userStore.isOrgMember;
