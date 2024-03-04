@@ -22,28 +22,28 @@ defineProps({
 </script>
 
 <template>
-  <div>
-    <nav class="relative text-white p-4 bg-gray-800 rounded-xl">
-      <div class="container mx-auto flex justify-between items-center">
-        <!-- Hamburger Icon -->
-        <button @click="toggleMenu" class="md:hidden">
-          <Bars3Icon class="h-6 w-6" v-if="!isMenuOpen" />
-          <XMarkIcon class="h-6 w-6" v-else />
-        </button>
-        <div class="hidden md:flex space-x-4">
+  <div class="bg-transparent md:bg-gray-800"> <!-- This container will wrap everything -->
+    <div class="md:sticky md:top-0 md:z-50"> <!-- This makes the bar sticky at the top for medium screens and up -->
+      <nav class="text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+          <!-- Hamburger Icon -->
+          <div class="w-full flex justify-end md:hidden">            
+            <button @click="toggleMenu" class="bg-gray-800">
+              <Bars3Icon class="h-6 w-6" v-if="!isMenuOpen" />
+              <XMarkIcon class="h-6 w-6" v-else />
+            </button>
+          </div>
           <!-- Desktop Menu Items -->
+          <div id="desktop-container" class="hidden md:flex space-x-4 w-full justify-end items-center">
+            <VisitorMenuItems :goToSignUp="goToSignUp" :goToLogin="goToLogin" />
+          </div>
+        </div>
+        <!-- Mobile Menu Items, they should be in the same nav container but will show/hide based on the menu state -->
+        <div :class="isMenuOpen ? 'block p-2 bg-sage-200 shadow-lg rounded-lg' : 'hidden'" class="md:hidden">
           <VisitorMenuItems :goToSignUp="goToSignUp" :goToLogin="goToLogin" />
         </div>
-      </div>
-      <div
-        :class="
-          isMenuOpen ? 'absolute right-0 mt-6 p-1 w-48 bg-sage-200 shadow-lg rounded-lg' : 'hidden'
-        "
-        class="md:hidden z-10"
-      >
-        <!-- Mobile Menu Items -->
-        <VisitorMenuItems :goToSignUp="goToSignUp" :goToLogin="goToLogin" />
-      </div>
-    </nav>
+      </nav>
+    </div>
   </div>
 </template>
+
