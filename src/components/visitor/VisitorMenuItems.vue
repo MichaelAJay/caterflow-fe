@@ -21,6 +21,6 @@ defineProps({
   @apply block p-2 hover:bg-gray-700 text-white text-lg md:hover:bg-transparent md:p-0 md:text-caramel-500 md:text-center;
 }
 .action {
-  @apply bg-caramel-500 rounded text-white min-w-[120px] md:min-w-[140px];;
+  @apply bg-caramel-500 rounded text-white min-w-[120px] md:min-w-[140px] md:mt-1 md:mb-1;
 }
 </style>

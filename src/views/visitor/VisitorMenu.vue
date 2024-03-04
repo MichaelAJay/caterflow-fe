@@ -24,13 +24,13 @@ defineProps({
 <template>
   <div class="bg-transparent md:bg-gray-800"> <!-- This container will wrap everything -->
     <div class="md:sticky md:top-0 md:z-50"> <!-- This makes the bar sticky at the top for medium screens and up -->
-      <nav class="text-white p-4">
+      <nav class="text-white">
         <div class="container mx-auto flex justify-between items-center">
           <!-- Hamburger Icon -->
           <div class="w-full flex justify-end md:hidden">            
-            <button @click="toggleMenu" class="bg-gray-800">
-              <Bars3Icon class="h-6 w-6" v-if="!isMenuOpen" />
-              <XMarkIcon class="h-6 w-6" v-else />
+            <button @click="toggleMenu" class="bg-gray-800 p-3 rounded-md">
+              <Bars3Icon class="h-8 w-8" v-if="!isMenuOpen" />
+              <XMarkIcon class="h-8 w-8" v-else />
             </button>
           </div>
           <!-- Desktop Menu Items -->
