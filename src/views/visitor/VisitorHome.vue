@@ -22,9 +22,7 @@ const goToLogin = async () => {
 
 <template>
   <div id="visitor-home-container">
-    <nav class="flex justify-end items-center">
-      <VisitorMenu :goToSignUp="goToSignUp" :goToLogin="goToLogin" />
-    </nav>
+    <VisitorMenu :goToSignUp="goToSignUp" :goToLogin="goToLogin" />
 
     <section class="text-center p-8">
       <h1>Simplify Your Catering Management</h1>
