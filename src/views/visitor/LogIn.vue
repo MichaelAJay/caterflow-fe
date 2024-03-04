@@ -53,31 +53,15 @@ export default {
           return;
         }
 
-        // This actually needs to change a bit. The flow now will inject a modal at this point if user.email_verified is false
-        console.log('here be user', user);
         if (!user.emailVerified) {
-          // Open "FinishOnboardingPrompt" modal
-          console.log('Pop up large "Finish Onboarding Prompt" modal');
           showFinishOnboardingPrompt.value = true;
         } else {
-          // @TODO uncomment this apiLogin call
-          // const { hasAccount: doesUserHaveAccount } = await apiLogin();
-
-          // In this section, make the apiLogin() request, set the state, then go to dashboard. We'll keep the modal feel for the "Create Account"
           const { hasAccount: doesUserHaveAccount } = await apiLogin();
           userStore.setIsOrgMember(doesUserHaveAccount);
           console.log('routing to Dashboard from Login');
           router.push({ name: 'Dashboard' });
         }
-
-        // const { hasAccount: doesUserHaveAccount } = await apiLogin();
-        // userStore.setIsOrgMember(doesUserHaveAccount);
-
-        // This isn't right anymore
-        // const routeName = user.emailVerified ? 'Dashboard' : 'Onboard Wizard';
-        // router.push({ name: routeName });
       } catch (err: any) {
-        console.error('submitForm catch', err.message);
         showError.value = true;
         errorMessage.value = err.message || 'An error occurred during account creation.';
       }
