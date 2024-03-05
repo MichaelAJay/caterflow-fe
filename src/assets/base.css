@@ -48,5 +48,5 @@ p {
 input[type='email'],
 input[type='password'],
 input[type='text'] {
-  @apply py-3 px-4 text-base rounded-md border-gray-500 shadow-sm focus:border-caramel-500 focus:ring-caramel-500 w-full;
+  @apply py-3 px-4 text-base rounded-md bg-caramel-100 border-caramel-500 shadow-sm focus:border-caramel-500 focus:ring-caramel-500 w-full;
 }

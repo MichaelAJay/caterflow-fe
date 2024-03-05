@@ -83,10 +83,10 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div id="signup-container" class="flex flex-col justify-center items-center bg-gray-100 px-4">
+  <div id="login-container" class="login-container min-h-full flex flex-col justify-center items-center py-1 sm:py-0 px-4">
     <LogoContainer />
     <div class="p-6 max-w-md w-full bg-white rounded-xl shadow-md">
-      <form @submit.prevent="handleLogin" class="space-y-6">
+      <form @submit.prevent="handleLogin" class="login-form space-y-6">
         <div class="text-right">
           <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
             <HomeIcon class="h-6 w-6 text-gray-500" />
@@ -136,3 +136,19 @@ const closeModal = () => {
     <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
   </div>
 </template>
+
+<style>
+@media (min-height: 800px) {
+  .login-container {
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+  }
+  .login-form {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  input, button {
+    padding: 12px 20px;
+  }
+}
+</style>
