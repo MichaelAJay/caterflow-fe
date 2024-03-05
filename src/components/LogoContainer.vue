@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import truckLogo from '../assets/truck-with-chef-hat-logo-round.png'
+import truckLogo from '../assets/truck-with-chef-hat-logo-round.png';
 </script>
 
 <template>
