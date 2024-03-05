@@ -1,8 +1,0 @@
-{
-    "local": {
-        "truck-with-hat-logo-round": "./truck-with-chef-hat-logo-round.png"
-    },
-    "production": {
-        "truck-with-hat-logo-round": "./truck-with-chef-hat-logo-round.png"
-    }
-}

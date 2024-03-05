@@ -22,28 +22,35 @@ defineProps({
 </script>
 
 <template>
-  <div class="bg-transparent md:bg-gray-800"> <!-- This container will wrap everything -->
-    <div class="md:sticky md:top-0 md:z-50"> <!-- This makes the bar sticky at the top for medium screens and up -->
+  <div class="bg-transparent md:bg-gray-800">
+    <!-- This container will wrap everything -->
+    <div class="md:sticky md:top-0 md:z-50">
+      <!-- This makes the bar sticky at the top for medium screens and up -->
       <nav class="text-white">
         <div class="container mx-auto flex justify-between items-center">
           <!-- Hamburger Icon -->
-          <div class="w-full flex justify-end md:hidden">            
+          <div class="w-full flex justify-end md:hidden">
             <button @click="toggleMenu" class="bg-gray-800 p-3 rounded-md">
               <Bars3Icon class="h-8 w-8" v-if="!isMenuOpen" />
               <XMarkIcon class="h-8 w-8" v-else />
             </button>
           </div>
           <!-- Desktop Menu Items -->
-          <div id="desktop-container" class="hidden md:flex space-x-4 w-full justify-end items-center">
+          <div
+            id="desktop-container"
+            class="hidden md:flex space-x-4 w-full justify-end items-center"
+          >
             <VisitorMenuItems :goToSignUp="goToSignUp" :goToLogin="goToLogin" />
           </div>
         </div>
         <!-- Mobile Menu Items, they should be in the same nav container but will show/hide based on the menu state -->
-        <div :class="isMenuOpen ? 'block p-2 bg-sage-200 shadow-lg rounded-lg' : 'hidden'" class="md:hidden">
+        <div
+          :class="isMenuOpen ? 'block p-2 bg-sage-200 shadow-lg rounded-lg' : 'hidden'"
+          class="md:hidden"
+        >
           <VisitorMenuItems :goToSignUp="goToSignUp" :goToLogin="goToLogin" />
         </div>
       </nav>
     </div>
   </div>
 </template>
-

@@ -8,6 +8,7 @@ import router from '@/router';
 import { apiLogin } from '@/services/apiService';
 import { useUserStore } from '@/stores/user';
 import FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
+import LogoContainer from '@/components/LogoContainer.vue';
 
 defineExpose({ EyeIcon, EyeSlashIcon, ErrorAlert, FinishOnboardingPrompt });
 
@@ -22,10 +23,12 @@ onMounted(async () => {
 
 const form = ref({
   email: '',
-  password: '',
+  password: ''
 });
 
-const isInputValid = computed(() => form.value.email.trim() !== '' && form.value.password.trim() !== '');
+const isInputValid = computed(
+  () => form.value.email.trim() !== '' && form.value.password.trim() !== ''
+);
 
 const passwordVisible = ref(false);
 const showError = ref(false);
@@ -63,12 +66,12 @@ const handleLogin = async () => {
 };
 
 const handleSignUp = () => {
-  router.push({name: "Sign Up"})
-}
+  router.push({ name: 'Sign Up' });
+};
 
 const handleHomeClick = () => {
-  router.push({name: "home"})
-}
+  router.push({ name: 'home' });
+};
 
 function failedLogin(user: User | { failed: string }): user is { failed: string } {
   return (user as { failed: string }).failed !== undefined;
@@ -80,7 +83,8 @@ const closeModal = () => {
 </script>
 
 <template>
-    <div id="signup-container" class="flex flex-col justify-center items-center bg-gray-100 px-4">
+  <div id="signup-container" class="flex flex-col justify-center items-center bg-gray-100 px-4">
+    <LogoContainer />
     <div class="p-6 max-w-md w-full bg-white rounded-xl shadow-md">
       <form @submit.prevent="handleLogin" class="space-y-6">
         <div class="text-right">
@@ -122,10 +126,7 @@ const closeModal = () => {
           </button>
         </div>
         <div class="flex justify-center">
-          <button
-            @click="handleSignUp" 
-            class="text-sage-500 hover:text-sage-600"
-          >
+          <button @click="handleSignUp" class="text-sage-500 hover:text-sage-600">
             Don't have an account? Sign Up
           </button>
         </div>
