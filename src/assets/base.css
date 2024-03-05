@@ -44,3 +44,9 @@ h2 {
 p {
   @apply text-sm sm:text-base md:text-lg text-warm-gray-500;
 }
+
+input[type='email'],
+input[type='password'],
+input[type='text'] {
+  @apply py-3 px-4 text-base rounded-md border-gray-300 shadow-sm focus:border-caramel-500 focus:ring-caramel-500 w-full;
+}
