@@ -139,16 +139,17 @@ const closeModal = () => {
 
 <style>
 @media (min-height: 800px) {
-  .login-container {
-    padding-top: 3vh;
-    padding-bottom: 3vh;
-  }
   .login-form {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    @apply my-2
   }
   input, button {
     padding: 12px 20px;
+  }
+}
+@media (min-height: 900px) {
+  .login-container {
+    padding-top: 3vh;
+    padding-bottom: 3vh;
   }
 }
 </style>
