@@ -1,49 +1,41 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { EyeIcon, EyeSlashIcon, HomeIcon } from '@heroicons/vue/24/outline';
 import ErrorAlert from '@/components/ErrorAlert.vue';
-import { getUser, login } from '@/services/firestoreAuth';
-import type { User } from 'firebase/auth';
-import router from '@/router';
-import { apiLogin } from '@/services/apiService';
-import { useUserStore } from '@/stores/user';
 import FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
 import LogoContainer from '@/components/LogoContainer.vue';
-import { useOrientationStore } from '@/stores/orientation';
+import { EyeIcon, EyeSlashIcon, HomeIcon } from '@heroicons/vue/24/outline';
+import { useScreenStore } from '@/stores/screen';
+import { getUser, login } from '@/services/firestoreAuth';
+import router from '@/router';
+import type { User } from 'firebase/auth';
+import { useUserStore } from '@/stores/user';
+import { apiLogin } from '@/services/apiService';
 
 defineExpose({ EyeIcon, EyeSlashIcon, ErrorAlert, FinishOnboardingPrompt });
 
+// Initialize stores
+const screenStore = useScreenStore();
+const userStore = useUserStore();
+
+// Refs & computed properties
 const showFinishOnboardingPrompt = ref(false);
-
-onMounted(async () => {
-  const user = getUser(false);
-  if (user) {
-    router.push({ name: 'Dashboard' });
-  }
-});
-
-const orientationStore = useOrientationStore();
-const orientation = computed(() => orientationStore.orientation);
-
-const form = ref({
-  email: '',
-  password: ''
-});
-
-const isInputValid = computed(
-  () => form.value.email.trim() !== '' && form.value.password.trim() !== ''
-);
-
+const form = ref({ email: '', password: '' });
 const passwordVisible = ref(false);
 const showError = ref(false);
 const errorMessage = ref('');
 
+const isInputValid = computed(
+  () => form.value.email.trim() !== '' && form.value.password.trim() !== ''
+);
+const orientation = computed<'landscape' | 'portrait'>(() => screenStore.orientation);
+const isTabletOrLarger = computed<boolean>(() => screenStore.isTabletOrLarger)
+
+// Functions
 const togglePasswordVisibility = () => {
   passwordVisible.value = !passwordVisible.value;
 };
 
 const handleLogin = async () => {
-  const userStore = useUserStore();
   const { email, password } = { ...form.value };
 
   try {
@@ -88,12 +80,21 @@ function failedLogin(user: User | { failed: string }): user is { failed: string 
 const closeModal = () => {
   showFinishOnboardingPrompt.value = false;
 };
+
+// Lifecycle hooks
+onMounted(async () => {
+  const user = getUser(false);
+  if (user) {
+    router.push({ name: 'Dashboard' });
+  }
+});
 </script>
 
 <template>
   <div
     id="login-container"
     class="relative flex-1 login-container min-h-full flex flex-col justify-center items-center py-1 sm:py-0 px-4"
+    :class="{ 'flex-col': orientation === 'portrait', 'flex-row': orientation === 'landscape' }"
   >
     <div class="absolute top-0 right-0 pt-3 pr-3">
       <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
@@ -208,4 +209,4 @@ const closeModal = () => {
     @apply text-3xl pb-3;
   }
 }
-</style>
+</style>@/stores/screen
