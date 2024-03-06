@@ -7,7 +7,7 @@ import { useScreenStore } from './stores/screen';
 const screenStore = useScreenStore();
 const handleResize = () => {
   screenStore.updateDimensions();
-}
+};
 window.addEventListener('resize', handleResize);
 // Initialize
 handleResize();
@@ -25,4 +25,5 @@ const showFooter = computed(() => !route.meta.hideFooter);
     </div>
     <Footer v-if="showFooter" />
   </div>
-</template>./stores/screen
+</template>
+./stores/screen

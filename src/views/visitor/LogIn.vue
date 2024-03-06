@@ -28,7 +28,7 @@ const isInputValid = computed(
   () => form.value.email.trim() !== '' && form.value.password.trim() !== ''
 );
 const orientation = computed<'landscape' | 'portrait'>(() => screenStore.orientation);
-const isTabletOrLarger = computed<boolean>(() => screenStore.isTabletOrLarger)
+const isTabletOrLarger = computed<boolean>(() => screenStore.isTabletOrLarger);
 
 // Functions
 const togglePasswordVisibility = () => {
@@ -209,4 +209,5 @@ onMounted(async () => {
     @apply text-3xl pb-3;
   }
 }
-</style>@/stores/screen
+</style>
+@/stores/screen
