@@ -85,8 +85,8 @@ const closeModal = () => {
 <template>
   <div id="login-container" class="login-container min-h-full flex flex-col justify-center items-center py-1 sm:py-0 px-4">
     <LogoContainer />
-    <div class="p-6 max-w-md w-full bg-white rounded-xl shadow-md">
-      <form @submit.prevent="handleLogin" class="login-form space-y-6">
+    <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md">
+      <form @submit.prevent="handleLogin" class="login-form space-y-5">
         <div class="text-right">
           <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
             <HomeIcon class="h-6 w-6 text-gray-500" />
@@ -118,6 +118,7 @@ const closeModal = () => {
         </div>
         <div>
           <button
+            id="login-button"
             type="submit"
             :disabled="!isInputValid"
             class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-caramel-600 hover:bg-caramel-700 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -137,13 +138,39 @@ const closeModal = () => {
   </div>
 </template>
 
-<style>
-@media (min-height: 800px) {
-  .login-form {
-    @apply my-2
+<style scoped>
+@media (max-height: 668px) {
+  div form {
+    @apply space-y-3
   }
-  input, button {
-    padding: 12px 20px;
+}
+
+@media (min-height: 700px) {
+  #login-button {
+    @apply text-base;
+  }
+  .login-form {
+    @apply space-y-4
+  }
+  .login-form input {
+    @apply text-lg py-1
+  }
+  .login-form label {
+    @apply text-lg pt-1 pb-2
+  }
+}
+@media (min-height: 800px) {
+  #login-button {
+    @apply text-lg mt-8;
+  }
+  .login-form input {
+    @apply text-xl py-2
+  }
+  .login-form label {
+    @apply text-xl
+  }
+  .login-form button {
+    @apply py-1
   }
 }
 @media (min-height: 900px) {
