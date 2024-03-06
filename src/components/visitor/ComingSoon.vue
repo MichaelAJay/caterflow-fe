@@ -11,13 +11,16 @@ const items = ref([
 </script>
 
 <template>
-  <div class="bg-white bg-opacity-90 rounded-xl shadow-lg p-8 border border-gray-200 max-w-md w-full">
-    <h1 class="text-3xl font-bold mb-6 text-center text-caramel-600">Coming Soon</h1>
-    <ul class="list-inside list-disc text-lg text-gray-700">
-      <li v-for="(item, index) in items" :key="index" class="mb-3">
-        {{ item }}
-      </li>
-    </ul>
+  <div class="flex flex-col items-center">
+
+    <div class="bg-white bg-opacity-90 rounded-xl shadow-lg p-8 border border-gray-200 max-w-md w-full">
+      <h1 class="text-3xl font-bold mb-6 text-center text-caramel-600">Serving Soon</h1>
+      <ul class="list-inside list-disc text-lg text-gray-700">
+        <li v-for="(item, index) in items" :key="index" class="mb-3">
+          {{ item }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
