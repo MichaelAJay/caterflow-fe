@@ -39,21 +39,24 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="login-container" class="flex-1 flex flex-col justify-center">
+  <div id="login-container" class="flex-1 flex flex-col justify-center items-center">
     <LogoContainer class="py-5" imgClass="h-28" />
+    <h2 class="text-2xl text-accents-500 font-light mb-2">Welcome Back!</h2>
     <div
       id="login-sections"
       class="flex-1 min-h-full px-4 py-1 sm:py-0 flex"
       :class="{
         'flex-col items-center justify-center': !showSplitContent,
-        'flex-row items-stretch space-x-4': showSplitContent
+        'w-full flex-row items-stretch justify-around': showSplitContent
       }"
     >
       <div v-if="showSplitContent" class="w-1/2">
+        <!-- <div v-if="showSplitContent"> -->
         <ComingSoon />
       </div>
   
       <LoginContent :class="{ 'w-1/2': showSplitContent }" />
+      <!-- <LoginContent /> -->
   
       <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
       <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />

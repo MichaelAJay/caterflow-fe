@@ -88,7 +88,7 @@ onMounted(async () => {
         <HomeIcon class="h-8 w-8 text-accents-500" />
       </button>
     </div>
-    <h2 class="text-2xl text-accents-500 font-light mb-2">Welcome Back!</h2>
+
 
     <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md">
       <form @submit.prevent="handleLogin" class="login-form space-y-5">
