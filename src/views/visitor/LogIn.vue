@@ -181,7 +181,7 @@ const closeModal = () => {
     @apply text-lg pt-1 pb-2;
   }
 }
-@media (min-height: 800px) {
+@media (min-height: 750px) {
   #login-button {
     @apply text-lg mt-8;
   }
@@ -192,13 +192,22 @@ const closeModal = () => {
     @apply text-xl;
   }
   .login-form button {
-    @apply py-1;
+    @apply py-1 text-lg;
+  }
+  a {
+    @apply text-base;
   }
 }
-@media (min-height: 900px) {
+@media (min-height: 850px) {
   .login-container {
     padding-top: 3vh;
     padding-bottom: 3vh;
+  }
+  #login-button {
+    @apply py-3 text-xl;
+  }
+  h2 {
+    @apply text-3xl pb-3;
   }
 }
 </style>
