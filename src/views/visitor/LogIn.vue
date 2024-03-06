@@ -27,8 +27,7 @@ const errorMessage = ref('');
 const isInputValid = computed(
   () => form.value.email.trim() !== '' && form.value.password.trim() !== ''
 );
-const orientation = computed<'landscape' | 'portrait'>(() => screenStore.orientation);
-const isTabletOrLarger = computed<boolean>(() => screenStore.isTabletOrLarger);
+const showSplitContent = computed<boolean>(() => screenStore.orientation === 'landscape' && screenStore.isTabletOrLarger)
 
 // Functions
 const togglePasswordVisibility = () => {
@@ -95,9 +94,8 @@ onMounted(async () => {
     id="login-container"
     class="flex-1 min-h-full px-4 py-1 sm:py-0"
     :class="{
-      'flex flex-col items-center justify-center': orientation === 'portrait',
-      'flex flex-row items-start justify-center space-x-4':
-        orientation === 'landscape' && isTabletOrLarger
+      'flex flex-col items-center justify-center': !showSplitContent,
+      'flex flex-row items-start justify-center space-x-4': showSplitContent
     }"
   >
     <div id="existing-login">
