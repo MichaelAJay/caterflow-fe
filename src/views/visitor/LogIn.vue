@@ -9,6 +9,7 @@ import { apiLogin } from '@/services/apiService';
 import { useUserStore } from '@/stores/user';
 import FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
 import LogoContainer from '@/components/LogoContainer.vue';
+import { useOrientationStore } from '@/stores/orientation';
 
 defineExpose({ EyeIcon, EyeSlashIcon, ErrorAlert, FinishOnboardingPrompt });
 
@@ -20,6 +21,9 @@ onMounted(async () => {
     router.push({ name: 'Dashboard' });
   }
 });
+
+const orientationStore = useOrientationStore();
+const orientation = computed(() => orientationStore.orientation);
 
 const form = ref({
   email: '',
@@ -96,15 +100,10 @@ const closeModal = () => {
         <HomeIcon class="h-8 w-8 text-accents-500" />
       </button>
     </div>
-    <!-- <div class="flex-grow flex flex-col justify-center items-center w-full"> -->
     <LogoContainer class="py-5" imgClass="h-28" />
     <h2 class="text-2xl text-accents-500 font-light my-2">Welcome Back!</h2>
     <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md">
       <form @submit.prevent="handleLogin" class="login-form space-y-5">
-        <!-- <div class="text-right">
-
-         Old button div
-        </div> -->
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
           <input id="email" v-model="form.email" type="email" required />
@@ -154,7 +153,6 @@ const closeModal = () => {
         </div>
       </form>
     </div>
-    <!-- </div> -->
     <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
     <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
   </div>
