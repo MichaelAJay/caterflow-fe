@@ -84,7 +84,7 @@ const closeModal = () => {
 
 <template>
   <div id="login-container" class="login-container min-h-full flex flex-col justify-center items-center py-1 sm:py-0 px-4">
-    <LogoContainer />
+    <LogoContainer class="p-5"/>
     <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md">
       <form @submit.prevent="handleLogin" class="login-form space-y-5">
         <div class="text-right">

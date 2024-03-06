@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import truckLogo from '../assets/truck-with-chef-hat-logo-round.png';
+import truckLogo from '../assets/CF_logo_vector.svg';
 </script>
 
 <template>
-  <div class="flex justify-center items-center px-4 pb-4"> <!-- fiddling from p-4 -->
+  <div class="flex justify-center items-center">
     <img
       :src="truckLogo"
       alt="Logo: A catering truck with a chef's hat on top of it"
-      class="w-50"
+      class="h-28"
     />
   </div>
 </template>
