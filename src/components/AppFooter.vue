@@ -15,6 +15,6 @@
 
 <style scoped>
 footer div nav ul li a {
-  @apply hover:underline focus:outline-none focus:ring-caramel-500 focus:ring-opacity-50 py-2 text-sm sm:text-base
+  @apply hover:underline focus:outline-none focus:ring-caramel-500 focus:ring-opacity-50 py-2 text-sm sm:text-base;
 }
 </style>

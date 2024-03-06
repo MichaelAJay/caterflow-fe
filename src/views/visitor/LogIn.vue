@@ -83,8 +83,11 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div id="login-container" class="login-container min-h-full flex flex-col justify-center items-center py-1 sm:py-0 px-4">
-    <LogoContainer class="p-5"/>
+  <div
+    id="login-container"
+    class="login-container min-h-full flex flex-col justify-center items-center py-1 sm:py-0 px-4"
+  >
+    <LogoContainer class="py-5" svgClass="h-28" />
     <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md">
       <form @submit.prevent="handleLogin" class="login-form space-y-5">
         <div class="text-right">
@@ -141,7 +144,7 @@ const closeModal = () => {
 <style scoped>
 @media (max-height: 668px) {
   div form {
-    @apply space-y-3
+    @apply space-y-3;
   }
 }
 
@@ -150,13 +153,13 @@ const closeModal = () => {
     @apply text-base;
   }
   .login-form {
-    @apply space-y-4
+    @apply space-y-4;
   }
   .login-form input {
-    @apply text-lg py-1
+    @apply text-lg py-1;
   }
   .login-form label {
-    @apply text-lg pt-1 pb-2
+    @apply text-lg pt-1 pb-2;
   }
 }
 @media (min-height: 800px) {
@@ -164,13 +167,13 @@ const closeModal = () => {
     @apply text-lg mt-8;
   }
   .login-form input {
-    @apply text-xl py-2
+    @apply text-xl py-2;
   }
   .login-form label {
-    @apply text-xl
+    @apply text-xl;
   }
   .login-form button {
-    @apply py-1
+    @apply py-1;
   }
 }
 @media (min-height: 900px) {
