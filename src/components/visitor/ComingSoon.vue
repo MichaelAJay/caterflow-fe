@@ -11,7 +11,7 @@ const items = ref([
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+  <div class="flex flex-col items-center justify-center">
     <h1 class="text-4xl font-bold mb-4">Coming Soon</h1>
     <ul>
       <li v-for="(item, index) in items" :key="index" class="text-lg mb-2">

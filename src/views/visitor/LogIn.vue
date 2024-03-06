@@ -40,19 +40,17 @@ onMounted(async () => {
 <template>
   <div
     id="login-container"
-    class="flex-1 min-h-full px-4 py-1 sm:py-0"
+    class="flex-1 min-h-full px-4 py-1 sm:py-0 flex"
     :class="{
-      'flex flex-col items-center justify-center': !showSplitContent,
-      'flex flex-row items-start justify-center space-x-4': showSplitContent
+      'flex-col items-center justify-center': !showSplitContent,
+      'flex-row items-stretch space-x-4': showSplitContent
     }"
   >
-    <!-- NEW CONTENT -->
     <div v-if="showSplitContent" class="w-1/2">
       <ComingSoon />
     </div>
 
-    <!-- PREVIOUSLY EXISTING CONTENT -->
-    <LoginContent />
+    <LoginContent :class="{ 'w-1/2': showSplitContent }" />
 
     <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
     <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />

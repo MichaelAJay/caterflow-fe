@@ -83,7 +83,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="existing-login">
+  <div id="existing-login" class="flex flex-col justify-center items-center">
     <div class="absolute top-0 right-0 pt-3 pr-3">
       <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
         <HomeIcon class="h-8 w-8 text-accents-500" />
@@ -91,6 +91,7 @@ onMounted(async () => {
     </div>
     <LogoContainer class="py-5" imgClass="h-28" />
     <h2 class="text-2xl text-accents-500 font-light my-2">Welcome Back!</h2>
+
     <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md">
       <form @submit.prevent="handleLogin" class="login-form space-y-5">
         <div>
