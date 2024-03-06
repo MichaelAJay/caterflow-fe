@@ -89,7 +89,6 @@ onMounted(async () => {
       </button>
     </div>
 
-
     <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md">
       <form @submit.prevent="handleLogin" class="login-form space-y-5">
         <div>

@@ -54,10 +54,10 @@ onMounted(async () => {
         <!-- <div v-if="showSplitContent"> -->
         <ComingSoon />
       </div>
-  
+
       <LoginContent :class="{ 'w-1/2': showSplitContent }" />
       <!-- <LoginContent /> -->
-  
+
       <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
       <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
     </div>
