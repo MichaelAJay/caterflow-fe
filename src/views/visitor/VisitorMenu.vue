@@ -22,7 +22,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="bg-transparent md:bg-gray-800">
+  <div class="relative bg-transparent md:bg-gray-800">
     <!-- This container will wrap everything -->
     <div class="md:sticky md:top-0 md:z-50">
       <!-- This makes the bar sticky at the top for medium screens and up -->
@@ -44,10 +44,7 @@ defineProps({
           </div>
         </div>
         <!-- Mobile Menu Items, they should be in the same nav container but will show/hide based on the menu state -->
-        <div
-          :class="isMenuOpen ? 'block p-2 bg-sage-200 shadow-lg rounded-lg' : 'hidden'"
-          class="md:hidden"
-        >
+        <div :class="isMenuOpen ? 'absolute inset-x-0 top-full z-10 block p-2 bg-sage-200 shadow-lg rounded-lg' : 'hidden'" class="md:hidden">
           <VisitorMenuItems :goToSignUp="goToSignUp" :goToLogin="goToLogin" />
         </div>
       </nav>

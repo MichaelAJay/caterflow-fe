@@ -69,6 +69,10 @@ const handleSignUp = () => {
   router.push({ name: 'Sign Up' });
 };
 
+const handleForgotPassword = () => {
+  console.log('forgot password clicked');
+};
+
 const handleHomeClick = () => {
   router.push({ name: 'home' });
 };
@@ -83,15 +87,24 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div id="login-container" class="login-container min-h-full flex flex-col justify-center items-center py-1 sm:py-0 px-4">
-    <LogoContainer />
+  <div
+    id="login-container"
+    class="relative flex-1 login-container min-h-full flex flex-col justify-center items-center py-1 sm:py-0 px-4"
+  >
+    <div class="absolute top-0 right-0 pt-3 pr-3">
+      <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
+        <HomeIcon class="h-8 w-8 text-accents-500" />
+      </button>
+    </div>
+    <!-- <div class="flex-grow flex flex-col justify-center items-center w-full"> -->
+    <LogoContainer class="py-5" imgClass="h-28" />
+    <h2 class="text-2xl text-accents-500 font-light my-2">Welcome Back!</h2>
     <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md">
       <form @submit.prevent="handleLogin" class="login-form space-y-5">
-        <div class="text-right">
-          <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
-            <HomeIcon class="h-6 w-6 text-gray-500" />
-          </button>
-        </div>
+        <!-- <div class="text-right">
+
+         Old button div
+        </div> -->
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
           <input id="email" v-model="form.email" type="email" required />
@@ -127,12 +140,21 @@ const closeModal = () => {
           </button>
         </div>
         <div class="flex justify-center">
-          <button @click="handleSignUp" class="text-sage-500 hover:text-sage-600">
+          <button @click="handleSignUp" class="text-sage-500 hover:text-sage-600 cursor-pointer">
             Don't have an account? Sign Up
           </button>
         </div>
+        <div class="text-center my-2">
+          <a
+            @click="handleForgotPassword"
+            class="text-sm text-sage-500 hover:text-sage-600 cursor-pointer"
+          >
+            Forgot your password?
+          </a>
+        </div>
       </form>
     </div>
+    <!-- </div> -->
     <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
     <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
   </div>
@@ -141,7 +163,7 @@ const closeModal = () => {
 <style scoped>
 @media (max-height: 668px) {
   div form {
-    @apply space-y-3
+    @apply space-y-3;
   }
 }
 
@@ -150,13 +172,13 @@ const closeModal = () => {
     @apply text-base;
   }
   .login-form {
-    @apply space-y-4
+    @apply space-y-4;
   }
   .login-form input {
-    @apply text-lg py-1
+    @apply text-lg py-1;
   }
   .login-form label {
-    @apply text-lg pt-1 pb-2
+    @apply text-lg pt-1 pb-2;
   }
 }
 @media (min-height: 800px) {
@@ -164,13 +186,13 @@ const closeModal = () => {
     @apply text-lg mt-8;
   }
   .login-form input {
-    @apply text-xl py-2
+    @apply text-xl py-2;
   }
   .login-form label {
-    @apply text-xl
+    @apply text-xl;
   }
   .login-form button {
-    @apply py-1
+    @apply py-1;
   }
 }
 @media (min-height: 900px) {
