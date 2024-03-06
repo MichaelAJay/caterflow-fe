@@ -2,14 +2,10 @@
 import { computed, onMounted, ref } from 'vue';
 import ErrorAlert from '@/components/ErrorAlert.vue';
 import FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
-import LogoContainer from '@/components/LogoContainer.vue';
 import { EyeIcon, EyeSlashIcon, HomeIcon } from '@heroicons/vue/24/outline';
 import { useScreenStore } from '@/stores/screen';
-import { getUser, login } from '@/services/firestoreAuth';
+import { getUser } from '@/services/firestoreAuth';
 import router from '@/router';
-import type { User } from 'firebase/auth';
-import { useUserStore } from '@/stores/user';
-import { apiLogin } from '@/services/apiService';
 import ComingSoon from '@/components/visitor/ComingSoon.vue';
 import LoginContent from './LoginContent.vue';
 
@@ -17,69 +13,17 @@ defineExpose({ EyeIcon, EyeSlashIcon, ErrorAlert, FinishOnboardingPrompt });
 
 // Initialize stores
 const screenStore = useScreenStore();
-const userStore = useUserStore();
 
 // Refs & computed properties
 const showFinishOnboardingPrompt = ref(false);
-const form = ref({ email: '', password: '' });
-const passwordVisible = ref(false);
 const showError = ref(false);
 const errorMessage = ref('');
 
-const isInputValid = computed(
-  () => form.value.email.trim() !== '' && form.value.password.trim() !== ''
-);
 const showSplitContent = computed<boolean>(
   () => screenStore.orientation === 'landscape' && screenStore.isTabletOrLarger
 );
 
 // Functions
-const togglePasswordVisibility = () => {
-  passwordVisible.value = !passwordVisible.value;
-};
-
-const handleLogin = async () => {
-  const { email, password } = { ...form.value };
-
-  try {
-    const user = await login(email, password);
-
-    if (failedLogin(user)) {
-      showError.value = true;
-      errorMessage.value = user.failed;
-      return;
-    }
-
-    if (!user.emailVerified) {
-      showFinishOnboardingPrompt.value = true;
-    } else {
-      const { hasAccount: doesUserHaveAccount } = await apiLogin();
-      userStore.setIsOrgMember(doesUserHaveAccount);
-      console.log('routing to Dashboard from Login');
-      router.push({ name: 'Dashboard' });
-    }
-  } catch (err: any) {
-    showError.value = true;
-    errorMessage.value = err.message || 'An error occurred during account creation.';
-  }
-};
-
-const handleSignUp = () => {
-  router.push({ name: 'Sign Up' });
-};
-
-const handleForgotPassword = () => {
-  console.log('forgot password clicked');
-};
-
-const handleHomeClick = () => {
-  router.push({ name: 'home' });
-};
-
-function failedLogin(user: User | { failed: string }): user is { failed: string } {
-  return (user as { failed: string }).failed !== undefined;
-}
-
 const closeModal = () => {
   showFinishOnboardingPrompt.value = false;
 };
@@ -116,53 +60,10 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-@media (max-height: 668px) {
-  div form {
-    @apply space-y-3;
-  }
-}
-
-@media (min-height: 700px) {
-  #login-button {
-    @apply text-base;
-  }
-  .login-form {
-    @apply space-y-4;
-  }
-  .login-form input {
-    @apply text-lg py-1;
-  }
-  .login-form label {
-    @apply text-lg pt-1 pb-2;
-  }
-}
-@media (min-height: 750px) {
-  #login-button {
-    @apply text-lg mt-8;
-  }
-  .login-form input {
-    @apply text-xl py-2;
-  }
-  .login-form label {
-    @apply text-xl;
-  }
-  .login-form button {
-    @apply py-1 text-lg;
-  }
-  a {
-    @apply text-base;
-  }
-}
 @media (min-height: 850px) {
   .login-container {
     padding-top: 3vh;
     padding-bottom: 3vh;
-  }
-  #login-button {
-    @apply py-3 text-xl;
-  }
-  h2 {
-    @apply text-3xl pb-3;
   }
 }
 </style>

@@ -4,18 +4,15 @@ import ErrorAlert from '@/components/ErrorAlert.vue';
 import FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
 import LogoContainer from '@/components/LogoContainer.vue';
 import { EyeIcon, EyeSlashIcon, HomeIcon } from '@heroicons/vue/24/outline';
-import { useScreenStore } from '@/stores/screen';
 import { getUser, login } from '@/services/firestoreAuth';
 import router from '@/router';
 import type { User } from 'firebase/auth';
 import { useUserStore } from '@/stores/user';
 import { apiLogin } from '@/services/apiService';
-import ComingSoon from '@/components/visitor/ComingSoon.vue';
 
 defineExpose({ EyeIcon, EyeSlashIcon, ErrorAlert, FinishOnboardingPrompt });
 
-// Initialize stores
-const screenStore = useScreenStore();
+// Initialize store
 const userStore = useUserStore();
 
 // Refs & computed properties
@@ -27,9 +24,6 @@ const errorMessage = ref('');
 
 const isInputValid = computed(
   () => form.value.email.trim() !== '' && form.value.password.trim() !== ''
-);
-const showSplitContent = computed<boolean>(
-  () => screenStore.orientation === 'landscape' && screenStore.isTabletOrLarger
 );
 
 // Functions
@@ -78,10 +72,6 @@ const handleHomeClick = () => {
 function failedLogin(user: User | { failed: string }): user is { failed: string } {
   return (user as { failed: string }).failed !== undefined;
 }
-
-const closeModal = () => {
-  showFinishOnboardingPrompt.value = false;
-};
 
 // Lifecycle hooks
 onMounted(async () => {
