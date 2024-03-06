@@ -8,6 +8,7 @@ import { getUser } from '@/services/firestoreAuth';
 import router from '@/router';
 import ComingSoon from '@/components/visitor/ComingSoon.vue';
 import LoginContent from './LoginContent.vue';
+import LogoContainer from '@/components/LogoContainer.vue';
 
 defineExpose({ EyeIcon, EyeSlashIcon, ErrorAlert, FinishOnboardingPrompt });
 
@@ -38,22 +39,25 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div
-    id="login-container"
-    class="flex-1 min-h-full px-4 py-1 sm:py-0 flex"
-    :class="{
-      'flex-col items-center justify-center': !showSplitContent,
-      'flex-row items-stretch space-x-4': showSplitContent
-    }"
-  >
-    <div v-if="showSplitContent" class="w-1/2">
-      <ComingSoon />
+  <div id="login-container" class="flex-1 flex flex-col justify-center">
+    <LogoContainer class="py-5" imgClass="h-28" />
+    <div
+      id="login-sections"
+      class="flex-1 min-h-full px-4 py-1 sm:py-0 flex"
+      :class="{
+        'flex-col items-center justify-center': !showSplitContent,
+        'flex-row items-stretch space-x-4': showSplitContent
+      }"
+    >
+      <div v-if="showSplitContent" class="w-1/2">
+        <ComingSoon />
+      </div>
+  
+      <LoginContent :class="{ 'w-1/2': showSplitContent }" />
+  
+      <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
+      <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
     </div>
-
-    <LoginContent :class="{ 'w-1/2': showSplitContent }" />
-
-    <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
-    <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
   </div>
 </template>
 

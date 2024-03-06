@@ -2,7 +2,6 @@
 import { computed, onMounted, ref } from 'vue';
 import ErrorAlert from '@/components/ErrorAlert.vue';
 import FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
-import LogoContainer from '@/components/LogoContainer.vue';
 import { EyeIcon, EyeSlashIcon, HomeIcon } from '@heroicons/vue/24/outline';
 import { getUser, login } from '@/services/firestoreAuth';
 import router from '@/router';
@@ -89,7 +88,6 @@ onMounted(async () => {
         <HomeIcon class="h-8 w-8 text-accents-500" />
       </button>
     </div>
-    <LogoContainer class="py-5" imgClass="h-28" />
     <h2 class="text-2xl text-accents-500 font-light my-2">Welcome Back!</h2>
 
     <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md">
