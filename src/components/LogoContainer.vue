@@ -1,12 +1,10 @@
 <script setup lang="ts">
-
 const props = defineProps({
   svgClass: {
     type: String,
     required: true
   }
-})
-
+});
 </script>
 
 <template>
