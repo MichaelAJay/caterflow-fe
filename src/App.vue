@@ -2,14 +2,15 @@
 import { useRoute } from 'vue-router';
 import Footer from './components/AppFooter.vue';
 import { computed } from 'vue';
-import { useOrientationStore } from './stores/orientation';
+import { useScreenStore } from './stores/screen';
 
-const orientationStore = useOrientationStore();
-window.addEventListener('resize', () => {
-  orientationStore.updateOrientation();
-});
-// Initialize orientation
-orientationStore.updateOrientation();
+const screenStore = useScreenStore();
+const handleResize = () => {
+  screenStore.updateDimensions();
+}
+window.addEventListener('resize', handleResize);
+// Initialize
+handleResize();
 
 const route = useRoute();
 const showFooter = computed(() => !route.meta.hideFooter);
@@ -24,4 +25,4 @@ const showFooter = computed(() => !route.meta.hideFooter);
     </div>
     <Footer v-if="showFooter" />
   </div>
-</template>
+</template>./stores/screen
