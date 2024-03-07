@@ -82,14 +82,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="existing-login" class="flex flex-col items-center">
+  <div id="login-content" class="flex-1 flex flex-col justify-center items-center">
     <div class="absolute top-0 right-0 pt-3 pr-3">
       <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
         <HomeIcon class="h-8 w-8 text-accents-500" />
       </button>
     </div>
 
-    <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md">
+    <div
+      class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex-1 flex flex-col justify-center"
+    >
       <form @submit.prevent="handleLogin" class="login-form space-y-5">
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
@@ -127,10 +129,10 @@ onMounted(async () => {
         </div>
         <div class="flex justify-center">
           <button @click="handleSignUp" class="text-sage-500 hover:text-sage-600 cursor-pointer">
-            Don't have an account? Sign Up
+            Don't have an account?<br>Sign Up
           </button>
         </div>
-        <div class="text-center my-2">
+        <div class="text-center">
           <a
             @click="handleForgotPassword"
             class="text-sm text-sage-500 hover:text-sage-600 cursor-pointer"
@@ -144,13 +146,16 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-@media (max-height: 668px) {
+@media (max-height: 667px) {
   div form {
     @apply space-y-3;
   }
 }
 
-@media (min-height: 700px) {
+@media (min-height: 650px) {
+  #login-content {
+    @apply py-3;
+  }
   #login-button {
     @apply text-base;
   }
@@ -161,12 +166,20 @@ onMounted(async () => {
     @apply text-lg py-1;
   }
   .login-form label {
-    @apply text-lg pt-1 pb-2;
+    @apply text-lg pb-1;
   }
 }
-@media (min-height: 750px) {
+@media (min-height: 675px) {
+  #login-content {
+    @apply py-4;
+  }
+}
+@media (min-height: 725px) {
+  #login-content {
+    @apply py-5;
+  }
   #login-button {
-    @apply text-lg mt-8;
+    @apply text-lg mt-7;
   }
   .login-form input {
     @apply text-xl py-2;
@@ -181,7 +194,15 @@ onMounted(async () => {
     @apply text-base;
   }
 }
+@media (min-height: 800px) {
+  #login-content {
+    @apply py-8;
+  }
+}
 @media (min-height: 850px) {
+  #login-content {
+    @apply py-12;
+  }
   .login-container {
     padding-top: 3vh;
     padding-bottom: 3vh;

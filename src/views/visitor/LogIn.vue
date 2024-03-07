@@ -9,6 +9,7 @@ import router from '@/router';
 import ComingSoon from '@/components/visitor/ComingSoon.vue';
 import LoginContent from './LoginContent.vue';
 import LogoContainer from '@/components/LogoContainer.vue';
+import truckLogo from '../../assets/CF_logo_vector.svg';
 
 defineExpose({ EyeIcon, EyeSlashIcon, ErrorAlert, FinishOnboardingPrompt });
 
@@ -40,7 +41,13 @@ onMounted(async () => {
 
 <template>
   <div id="login-container" class="flex-1 flex flex-col justify-center items-center">
-    <LogoContainer class="py-5" imgClass="h-28" />
+    <!-- <LogoContainer id="logo-container" class="py-4" imgClass="h-28" /> -->
+    <div id="logo-container" class="flex justify-center items-center">
+      <img
+        :src="truckLogo"
+        alt="Logo: A catering truck with a chef's hat on top of it"
+      />
+    </div>
     <h2 class="text-2xl text-accents-500 font-light mb-2">Welcome Back!</h2>
     <div
       id="login-sections"
@@ -51,12 +58,10 @@ onMounted(async () => {
       }"
     >
       <div v-if="showSplitContent" class="w-1/2">
-        <!-- <div v-if="showSplitContent"> -->
         <ComingSoon />
       </div>
 
       <LoginContent :class="{ 'w-1/2': showSplitContent }" />
-      <!-- <LoginContent /> -->
 
       <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
       <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
@@ -65,10 +70,37 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+#logo-container {
+  @apply py-3
+}
+#logo-container img {
+  @apply h-28
+}
+
+@media (min-height: 610px) {
+  #logo-container {
+    @apply pt-4 pb-3;
+  }
+}
+@media (min-height: 685px) {
+  #logo-container {
+    @apply pt-6 pb-5;
+  }
+}
+@media (min-height: 800px) {
+  #logo-container {
+    @apply pt-20;
+  }
+}
 @media (min-height: 850px) {
   .login-container {
     padding-top: 3vh;
     padding-bottom: 3vh;
+  }
+}
+@media (min-height: 900px) {
+  #logo-container img {
+    @apply h-36
   }
 }
 </style>
