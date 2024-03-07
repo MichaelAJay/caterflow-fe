@@ -85,45 +85,26 @@ onMounted(async () => {
   <div id="login-content" class="flex-1 flex flex-col justify-center items-center">
     <div class="absolute top-0 right-0 pt-3 pr-3">
       <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
-        <HomeIcon class="h-8 w-8 text-accents-500" />
+        <HomeIcon class="h-8 w-8" />
       </button>
     </div>
-
-    <div
-      class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex-1 flex flex-col justify-center"
-    >
-      <form @submit.prevent="handleLogin" class="login-form space-y-5">
+    <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex-1 flex flex-col justify-center">
+      <form @submit.prevent="handleLogin" class="space-y-5 sm:space-y-4 md:space-y-6">
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
-          <input id="email" v-model="form.email" type="email" required />
+          <label for="email" class="block font-medium text-gray-700">Email:</label>
+          <input id="email" v-model="form.email" type="email" required class="w-full mt-1 px-3 py-2 border rounded-md" />
         </div>
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-700">Password:</label>
+          <label for="password" class="block font-medium text-gray-700">Password:</label>
           <div class="relative mt-1">
-            <input
-              id="password"
-              v-model="form.password"
-              :type="passwordVisible ? 'text' : 'password'"
-              required
-            />
-            <button
-              type="button"
-              @click="togglePasswordVisibility"
-              class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500"
-              tabindex="-1"
-            >
-              <EyeIcon v-if="!passwordVisible" class="h-5 w-5" />
-              <EyeSlashIcon v-else class="h-5 w-5" />
+            <input id="password" v-model="form.password" :type="passwordVisible ? 'text' : 'password'" required class="w-full px-3 py-2 border rounded-md" />
+            <button type="button" @click="togglePasswordVisibility" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500" tabindex="-1">
+              <!-- Icons -->
             </button>
           </div>
         </div>
         <div>
-          <button
-            id="login-button"
-            type="submit"
-            :disabled="!isInputValid"
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-caramel-600 hover:bg-caramel-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <button id="login-button" type="submit" :disabled="!isInputValid" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-caramel-600 hover:bg-caramel-700 disabled:opacity-50 disabled:cursor-not-allowed">
             Log In
           </button>
         </div>
@@ -133,10 +114,7 @@ onMounted(async () => {
           </button>
         </div>
         <div class="text-center">
-          <a
-            @click="handleForgotPassword"
-            class="text-sm text-sage-500 hover:text-sage-600 cursor-pointer"
-          >
+          <a @click="handleForgotPassword" class="cursor-pointer text-sage-500 hover:text-sage-600">
             Forgot your password?
           </a>
         </div>
@@ -144,51 +122,3 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
-<style scoped>
-@media (max-height: 667px) {
-  div form {
-    @apply space-y-3;
-  }
-}
-
-@media (min-height: 650px) {
-  #login-button {
-    @apply text-base;
-  }
-  .login-form {
-    @apply space-y-4;
-  }
-  .login-form input {
-    @apply text-lg py-1;
-  }
-  .login-form label {
-    @apply text-lg pb-1;
-  }
-}
-@media (min-height: 725px) {
-  #login-button {
-    @apply text-lg mt-7;
-  }
-  .login-form input {
-    @apply text-xl py-2;
-  }
-  .login-form label {
-    @apply text-xl;
-  }
-  .login-form button {
-    @apply py-1 text-lg;
-  }
-  a {
-    @apply text-base;
-  }
-}
-@media (min-height: 850px) {
-  #login-button {
-    @apply py-3 text-xl;
-  }
-  h2 {
-    @apply text-3xl pb-3;
-  }
-}
-</style>
