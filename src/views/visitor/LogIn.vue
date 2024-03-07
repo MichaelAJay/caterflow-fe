@@ -2,13 +2,12 @@
 import { computed, onMounted, ref } from 'vue';
 import ErrorAlert from '@/components/ErrorAlert.vue';
 import FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
-import { EyeIcon, EyeSlashIcon, HomeIcon } from '@heroicons/vue/24/outline';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline';
 import { useScreenStore } from '@/stores/screen';
 import { getUser } from '@/services/firestoreAuth';
 import router from '@/router';
 import ComingSoon from '@/components/visitor/ComingSoon.vue';
 import LoginContent from './LoginContent.vue';
-import LogoContainer from '@/components/LogoContainer.vue';
 import truckLogo from '../../assets/CF_logo_vector.svg';
 
 defineExpose({ EyeIcon, EyeSlashIcon, ErrorAlert, FinishOnboardingPrompt });
