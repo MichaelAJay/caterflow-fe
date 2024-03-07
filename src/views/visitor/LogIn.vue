@@ -76,26 +76,44 @@ onMounted(async () => {
 #logo-container img {
   @apply h-28
 }
-
 @media (min-height: 610px) {
   #logo-container {
     @apply pt-4 pb-3;
+  }
+}
+@media (min-height: 650px) {
+  #login-sections {
+    @apply py-3
   }
 }
 @media (min-height: 685px) {
   #logo-container {
     @apply pt-6 pb-5;
   }
+  #login-sections {
+    @apply py-4
+  }
+}
+@media (min-height: 725px) {
+  #login-sections {
+    @apply py-5
+  }
 }
 @media (min-height: 800px) {
   #logo-container {
     @apply pt-20;
+  }
+  #login-sections {
+    @apply py-8
   }
 }
 @media (min-height: 850px) {
   .login-container {
     padding-top: 3vh;
     padding-bottom: 3vh;
+  }
+  #login-sections {
+    @apply py-12
   }
 }
 @media (min-height: 900px) {
