@@ -39,28 +39,25 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="login-container" class="flex-1 flex flex-col justify-center items-center">
-    <!-- <LogoContainer id="logo-container" class="py-4" imgClass="h-28" /> -->
-    <div id="logo-container" class="flex justify-center items-center">
+  <div id="login-container" class="flex flex-1 flex-col items-center justify-center p-4">
+    <div id="logo-container" class="flex items-center justify-center py-8 lg:py-20">
       <img
         :src="truckLogo"
         alt="Logo: A catering truck with a chef's hat on top of it"
+        class="h-28 lg:h-36"
       />
     </div>
-    <h2 class="text-2xl text-accents-500 font-light mb-2">Welcome Back!</h2>
+    <h2 class="mb-2 text-2xl font-light text-accents-500">Welcome Back!</h2>
     <div
       id="login-sections"
-      class="flex-1 min-h-full px-4 py-1 sm:py-0 flex"
-      :class="{
-        'flex-col items-center justify-center': !showSplitContent,
-        'w-full flex-row items-stretch justify-around': showSplitContent
-      }"
+      class="flex flex-1 w-full min-h-full flex-col items-center justify-center lg:flex-row lg:items-stretch lg:justify-around space-y-4 lg:space-y-0 lg:space-x-4"
+      :class="{'space-x-8 lg:space-x-12': showSplitContent}"
     >
-      <div v-if="showSplitContent" class="w-1/2">
+      <div v-if="showSplitContent" class="w-full lg:w-1/2">
         <ComingSoon />
       </div>
 
-      <LoginContent :class="{ 'w-1/2': showSplitContent }" />
+      <LoginContent :class="{'w-full lg:w-1/2': showSplitContent}" />
 
       <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
       <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
@@ -68,7 +65,7 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 #logo-container {
   @apply py-3
 }
@@ -120,5 +117,5 @@ onMounted(async () => {
     @apply h-36
   }
 }
-</style>
+</style> -->
 @/stores/screen
