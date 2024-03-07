@@ -203,10 +203,6 @@ onMounted(async () => {
   #login-content {
     @apply py-12;
   }
-  .login-container {
-    padding-top: 3vh;
-    padding-bottom: 3vh;
-  }
   #login-button {
     @apply py-3 text-xl;
   }
