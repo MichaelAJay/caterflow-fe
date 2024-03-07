@@ -153,9 +153,6 @@ onMounted(async () => {
 }
 
 @media (min-height: 650px) {
-  #login-content {
-    @apply py-3;
-  }
   #login-button {
     @apply text-base;
   }
@@ -169,15 +166,7 @@ onMounted(async () => {
     @apply text-lg pb-1;
   }
 }
-@media (min-height: 675px) {
-  #login-content {
-    @apply py-4;
-  }
-}
 @media (min-height: 725px) {
-  #login-content {
-    @apply py-5;
-  }
   #login-button {
     @apply text-lg mt-7;
   }
@@ -194,15 +183,7 @@ onMounted(async () => {
     @apply text-base;
   }
 }
-@media (min-height: 800px) {
-  #login-content {
-    @apply py-8;
-  }
-}
 @media (min-height: 850px) {
-  #login-content {
-    @apply py-12;
-  }
   #login-button {
     @apply py-3 text-xl;
   }
