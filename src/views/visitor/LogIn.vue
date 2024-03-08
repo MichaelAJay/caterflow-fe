@@ -51,13 +51,13 @@ onMounted(async () => {
     <div
       id="login-sections"
       class="flex flex-1 w-full min-h-full flex-col items-center justify-center lg:flex-row lg:items-stretch lg:justify-around space-y-4 lg:space-y-0 lg:space-x-4"
-      :class="{'space-x-8 lg:space-x-12': showSplitContent}"
+      :class="{ 'space-x-8 lg:space-x-12': showSplitContent }"
     >
-      <div v-if="showSplitContent" class="w-full lg:w-1/2">
-        <ComingSoon />
+      <div v-if="showSplitContent" class="flex-1 flex flex-col w-full lg:w-1/2">
+        <ComingSoon class="flex-1 flex flex-col" />
       </div>
 
-      <LoginContent :class="{'w-full lg:w-1/2': showSplitContent}" />
+      <LoginContent :class="{ 'w-full lg:w-1/2': showSplitContent }" />
 
       <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
       <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
@@ -65,57 +65,40 @@ onMounted(async () => {
   </div>
 </template>
 
-<!-- <style scoped>
+<style scoped>
 #logo-container {
-  @apply py-3
+  @apply py-3; /* Base vertical padding */
 }
 #logo-container img {
-  @apply h-28
+  @apply h-28; /* Base logo size */
 }
-@media (min-height: 610px) {
-  #logo-container {
-    @apply pt-4 pb-3;
-  }
-}
-@media (min-height: 650px) {
-  #login-sections {
-    @apply py-3
-  }
-}
-@media (min-height: 685px) {
-  #logo-container {
-    @apply pt-6 pb-5;
-  }
-  #login-sections {
-    @apply py-4
-  }
-}
-@media (min-height: 725px) {
-  #login-sections {
-    @apply py-5
-  }
-}
+
+/* Adjustments for larger screens' vertical spacing */
 @media (min-height: 800px) {
+  #login-container {
+    @apply py-7;
+  }
   #logo-container {
-    @apply pt-20;
+    @apply py-7;
   }
   #login-sections {
-    @apply py-8
+    @apply py-7;
   }
 }
-@media (min-height: 850px) {
-  .login-container {
-    padding-top: 3vh;
-    padding-bottom: 3vh;
-  }
-  #login-sections {
-    @apply py-12
-  }
-}
+
 @media (min-height: 900px) {
+  #login-container {
+    @apply py-8;
+  }
+  #logo-container {
+    @apply py-8;
+  }
+  #login-sections {
+    @apply py-8;
+  }
   #logo-container img {
-    @apply h-36
+    @apply h-36; /* Larger logo for larger screens */
   }
 }
-</style> -->
+</style>
 @/stores/screen

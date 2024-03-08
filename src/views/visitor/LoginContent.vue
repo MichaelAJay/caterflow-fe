@@ -88,29 +88,54 @@ onMounted(async () => {
         <HomeIcon class="h-8 w-8" />
       </button>
     </div>
-    <div class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex-1 flex flex-col justify-center">
+    <div
+      class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex-1 flex flex-col justify-center"
+    >
+      <!-- Card -->
       <form @submit.prevent="handleLogin" class="space-y-5 sm:space-y-4 md:space-y-6">
         <div>
           <label for="email" class="block font-medium text-gray-700">Email:</label>
-          <input id="email" v-model="form.email" type="email" required class="w-full mt-1 px-3 py-2 border rounded-md" />
+          <input
+            id="email"
+            v-model="form.email"
+            type="email"
+            required
+            class="w-full mt-1 px-3 py-2 border rounded-md"
+          />
         </div>
         <div>
           <label for="password" class="block font-medium text-gray-700">Password:</label>
           <div class="relative mt-1">
-            <input id="password" v-model="form.password" :type="passwordVisible ? 'text' : 'password'" required class="w-full px-3 py-2 border rounded-md" />
-            <button type="button" @click="togglePasswordVisibility" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500" tabindex="-1">
+            <input
+              id="password"
+              v-model="form.password"
+              :type="passwordVisible ? 'text' : 'password'"
+              required
+              class="w-full px-3 py-2 border rounded-md"
+            />
+            <button
+              type="button"
+              @click="togglePasswordVisibility"
+              class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500"
+              tabindex="-1"
+            >
               <!-- Icons -->
             </button>
           </div>
         </div>
         <div>
-          <button id="login-button" type="submit" :disabled="!isInputValid" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-caramel-600 hover:bg-caramel-700 disabled:opacity-50 disabled:cursor-not-allowed">
+          <button
+            id="login-button"
+            type="submit"
+            :disabled="!isInputValid"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-caramel-600 hover:bg-caramel-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             Log In
           </button>
         </div>
         <div class="flex justify-center">
           <button @click="handleSignUp" class="text-sage-500 hover:text-sage-600 cursor-pointer">
-            Don't have an account?<br>Sign Up
+            Don't have an account?<br />Sign Up
           </button>
         </div>
         <div class="text-center">
@@ -122,3 +147,17 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+@media (min-height: 800px) {
+  form label {
+    @apply text-lg mb-1;
+  }
+  form button {
+    @apply text-lg;
+  }
+  form a {
+    @apply text-base;
+  }
+}
+</style>

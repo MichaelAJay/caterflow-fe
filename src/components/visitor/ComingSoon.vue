@@ -11,9 +11,9 @@ const items = ref([
 </script>
 
 <template>
-  <div class="flex flex-col items-center">
+  <div class="flex-1 flex flex-col items-center">
     <div
-      class="bg-white bg-opacity-90 rounded-xl shadow-lg p-8 border border-gray-200 max-w-md w-full"
+      class="flex-1 bg-white bg-opacity-90 rounded-xl shadow-lg p-8 border border-gray-200 max-w-md w-full flex flex-col justify-center"
     >
       <h1 class="text-3xl font-bold mb-6 text-center text-caramel-600">Serving Soon</h1>
       <ul class="list-inside list-disc text-lg text-gray-700">
@@ -26,19 +26,17 @@ const items = ref([
 </template>
 
 <style scoped>
-/* You can add a custom font that suggests a menu-like appearance */
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 h1 {
   font-family: 'Great Vibes', cursive;
 }
 
-/* Optionally, add some more thematic decorations */
 ul {
   padding-left: 1rem;
 }
 
 li::marker {
-  color: #c86b3c; /* A color that matches your brand or suggests food/cuisine */
+  color: #c86b3c;
 }
 </style>
