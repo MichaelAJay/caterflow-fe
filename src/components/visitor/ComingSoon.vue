@@ -13,7 +13,7 @@ const items = ref([
 <template>
   <div class="flex-1 flex flex-col">
     <div
-      class="bg-white bg-opacity-90 rounded-xl shadow-lg p-8 border border-gray-200 max-w-md w-full flex flex-col"
+      class="flex-1 bg-white bg-opacity-90 rounded-xl shadow-lg p-8 border border-gray-200 max-w-md w-full flex flex-col"
     >
       <h1 class="text-3xl font-bold mb-6 text-center text-caramel-600">Serving Soon</h1>
       <ul class="list-inside list-disc text-lg text-gray-700">
