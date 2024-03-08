@@ -39,7 +39,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="login-container" class="flex flex-1 flex-col items-center justify-center p-4">
+  <div id="login-container" class="flex flex-1 flex-col items-center justify-start p-4 lg:items-stretch">
     <div id="logo-container" class="flex items-center justify-center py-8 lg:py-20">
       <img
         :src="truckLogo"
