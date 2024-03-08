@@ -50,8 +50,7 @@ onMounted(async () => {
     <h2 class="text-2xl font-light text-accents-500">Welcome Back!</h2>
     <div
       id="login-sections"
-      class="flex w-full min-h-full flex-col items-center justify-center lg:flex-row lg:items-stretch lg:justify-around space-y-4 lg:space-y-0 lg:space-x-4"
-      :class="{ 'space-x-8 lg:space-x-12': showSplitContent }"
+      class="flex w-full min-h-full flex-col items-center justify-center lg:flex-row lg:items-stretch lg:justify-around space-y-4 lg:space-y-0"
     >
       <div v-if="showSplitContent" class="flex-1 flex flex-col w-full lg:w-1/2">
         <ComingSoon />
