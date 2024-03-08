@@ -39,15 +39,15 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="login-container" class="flex flex-1 flex-col items-center justify-start p-4 lg:items-stretch">
-    <div id="logo-container" class="flex items-center justify-center py-8 lg:py-20">
+  <div id="login-container" class="flex flex-1 flex-col items-center justify-around p-4">
+    <div id="logo-container" class="flex items-center justify-center py-4 lg:py-20">
       <img
         :src="truckLogo"
         alt="Logo: A catering truck with a chef's hat on top of it"
         class="h-28 lg:h-36"
       />
     </div>
-    <h2 class="mb-2 text-2xl font-light text-accents-500">Welcome Back!</h2>
+    <h2 class="text-2xl font-light text-accents-500">Welcome Back!</h2>
     <div
       id="login-sections"
       class="flex w-full min-h-full flex-col items-center justify-center lg:flex-row lg:items-stretch lg:justify-around space-y-4 lg:space-y-0 lg:space-x-4"

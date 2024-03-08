@@ -92,7 +92,7 @@ onMounted(async () => {
       class="flex-1 p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex flex-col"
     >
       <!-- Card -->
-      <form @submit.prevent="handleLogin" class="space-y-5 sm:space-y-4 md:space-y-6">
+      <form @submit.prevent="handleLogin" class="space-y-3 sm:space-y-4 md:space-y-6">
         <div>
           <label for="email" class="block font-medium text-gray-700">Email:</label>
           <input
@@ -149,7 +149,10 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-@media (min-height: 800px) {
+@media (min-height: 805px) {
+  form {
+    @apply space-y-4
+  }
   form label {
     @apply text-lg mb-1;
   }
@@ -158,6 +161,11 @@ onMounted(async () => {
   }
   form a {
     @apply text-base;
+  }
+}
+@media (min-height: 900px) {
+  form {
+    @apply space-y-6
   }
 }
 </style>

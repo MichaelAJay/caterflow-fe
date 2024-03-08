@@ -11,7 +11,7 @@ const items = ref([
 </script>
 
 <template>
-  <div class="flex-1 flex flex-col">
+  <div class="flex-1 flex flex-col items-center">
     <div
       class="flex-1 bg-white bg-opacity-90 rounded-xl shadow-lg p-8 border border-gray-200 max-w-md w-full flex flex-col"
     >
