@@ -57,7 +57,7 @@ onMounted(async () => {
         <ComingSoon />
       </div>
 
-      <LoginContent :class="{ 'w-full lg:w-1/2': showSplitContent }" />
+      <LoginContent class="w-full" :class="{ 'lg:w-1/2': showSplitContent }" />
 
       <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
       <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
