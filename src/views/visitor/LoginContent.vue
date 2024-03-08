@@ -82,14 +82,14 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="login-content" class="flex flex-col items-center">
+  <div id="login-content" class="flex-1 flex flex-col items-center">
     <div class="absolute top-0 right-0 pt-3 pr-3">
       <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
         <HomeIcon class="h-8 w-8" />
       </button>
     </div>
     <div
-      class="p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex flex-col"
+      class="flex-1 p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex flex-col"
     >
       <!-- Card -->
       <form @submit.prevent="handleLogin" class="space-y-5 sm:space-y-4 md:space-y-6">
