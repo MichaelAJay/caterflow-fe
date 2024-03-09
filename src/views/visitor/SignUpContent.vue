@@ -1,11 +1,10 @@
-<script lang="ts">
+<script setup lang="ts">
 import { ref, watch } from 'vue';
 import {
   CheckCircleIcon,
   XCircleIcon,
   EyeIcon,
   EyeSlashIcon,
-  HomeIcon
 } from '@heroicons/vue/24/outline';
 import { ensureInView } from '../../utility/functions/useEnsureVisible';
 import ErrorAlert from '@/components/ErrorAlert.vue';
@@ -14,106 +13,77 @@ import { passwordRules } from '@/views/visitor/utility/password-rules.const';
 import router from '@/router';
 import { apiLogin } from '@/services/apiService';
 
-export default {
-  components: { CheckCircleIcon, XCircleIcon, EyeIcon, EyeSlashIcon, HomeIcon, ErrorAlert },
-  setup() {
-    const form = ref({
-      name: '',
-      email: '',
-      password: '',
-      'password-confirm': ''
-    });
+defineExpose({ CheckCircleIcon, XCircleIcon, EyeIcon, EyeSlashIcon, HomeIcon, ErrorAlert });
 
-    const checks = ref({
-      minLength: false,
-      hasNumber: false,
-      hasUpper: false,
-      hasLower: false,
-      hasSpecial: false,
-      matches: false
-    });
+// Refs
+const form = ref({
+  name: '',
+  email: '',
+  password: '',
+  'password-confirm': ''
+});
 
-    watch(
-      () => form.value.password,
-      (newPassword) => {
-        checks.value.minLength = newPassword.length >= passwordRules.minLength;
-        checks.value.hasNumber = passwordRules.hasNumber.test(newPassword);
-        checks.value.hasUpper = passwordRules.hasUpper.test(newPassword);
-        checks.value.hasLower = passwordRules.hasLower.test(newPassword);
-        checks.value.hasSpecial = passwordRules.hasSpecial.test(newPassword);
-        checks.value.matches = newPassword === form.value['password-confirm'];
-      }
-    );
+const checks = ref({
+  minLength: false,
+  hasNumber: false,
+  hasUpper: false,
+  hasLower: false,
+  hasSpecial: false,
+  matches: false
+});
 
-    watch(
-      () => form.value['password-confirm'],
-      (newConfirmPassword) => {
-        checks.value.matches = newConfirmPassword === form.value.password;
-      }
-    );
+const passwordVisible = ref(false);
+const validPasswordError = ref('');
+const matchPasswordError = ref('');
+const showError = ref(false);
+const errorMessage = ref('');
 
-    const passwordVisible = ref(false);
-    const validPasswordError = ref('');
-    const matchPasswordError = ref('');
-    const showError = ref(false);
-    const errorMessage = ref('');
+// Watches
+watch(
+  () => form.value.password,
+  (newPassword) => {
+    checks.value.minLength = newPassword.length >= passwordRules.minLength;
+    checks.value.hasNumber = passwordRules.hasNumber.test(newPassword);
+    checks.value.hasUpper = passwordRules.hasUpper.test(newPassword);
+    checks.value.hasLower = passwordRules.hasLower.test(newPassword);
+    checks.value.hasSpecial = passwordRules.hasSpecial.test(newPassword);
+    checks.value.matches = newPassword === form.value['password-confirm'];
+  }
+);
 
-    const togglePasswordVisibility = () => {
-      passwordVisible.value = !passwordVisible.value;
-    };
+watch(
+  () => form.value['password-confirm'],
+  (newConfirmPassword) => {
+    checks.value.matches = newConfirmPassword === form.value.password;
+  }
+);
 
-    const handleSignUp = async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { email, password, name } = { ...form.value };
-      try {
-        await signUpUser(email, password);
-        await updateUser({ displayName: name });
-        // await createUser()
-        await apiLogin();
+// Functions
+const togglePasswordVisibility = () => {
+  passwordVisible.value = !passwordVisible.value;
+};
 
-        router.push({ name: 'Onboard Wizard' });
-      } catch (err: any) {
-        showError.value = true;
-        errorMessage.value = 'An error occurred during account creation.';
-      }
-    };
-
-    const handleHome = () => {
-      console.log('home clicked');
-      router.push({ name: 'home' });
-    };
-
-    const focusHandler = () => ensureInView('last-check');
-
-    return {
-      form,
-      handleSignUp,
-      handleHome,
-      validPasswordError,
-      matchPasswordError,
-      checks,
-      focusHandler,
-      passwordVisible,
-      togglePasswordVisibility,
-      errorMessage,
-      showError
-    };
+const handleSignUp = async () => {
+  const { email, password, name } = { ...form.value };
+  try {
+    await signUpUser(email, password);
+    await updateUser({ displayName: name });
+    await apiLogin();
+    router.push({ name: 'Onboard Wizard' });
+  } catch (err: any) {
+    showError.value = true;
+    errorMessage.value = 'An error occurred during account creation.';
   }
 };
+
+const focusHandler = () => ensureInView('last-check');
 </script>
 
 <template>
   <div id="signup-container" class="flex-1 flex flex-col items-center">
-    <div class="flex flex-col items-center justify-center h-full bg-gray-100 rounded-xl">
+    <div class="flex-1 p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex flex-col">
       <div class="p-6 max-w-md w-full bg-white rounded-xl shadow-md">
-        <div class="flex items-center">
-          <button @click="handleHome" class="mr-2">
-            <HomeIcon class="h-6 w-6 text-gray-500" />
-          </button>
-          <h1 class="title text-2xl font-bold mb-2">Welcome to CaterBot!</h1>
-        </div>
-        <p class="mb-4 text-gray-600">Try me out! Your first ten transfers are free!</p>
-        <form @submit.prevent="handleSignUp" class="space-y-4">
+        <form @submit.prevent="handleSignUp" class="space-y-3 sm:space-y-4 md:space-y-6">
           <div>
             <label for="owner" class="form-label">Name:</label>
             <input id="owner" v-model="form.name" type="text" required class="form-input" />
@@ -158,7 +128,7 @@ export default {
           <button
             type="submit"
             :disabled="!Object.values(checks).every(Boolean)"
-            class="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-caramel-600 hover:bg-caramel-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Sign Up
           </button>
@@ -201,12 +171,24 @@ export default {
   </div>
 </template>
 
-<style scope>
-@media (max-width: 388px) {
-  .title {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    letter-spacing: -0.02em;
+<style scoped>
+@media (min-height: 805px) {
+  form {
+    @apply space-y-4;
+  }
+  form label {
+    @apply text-lg mb-1;
+  }
+  form button {
+    @apply text-lg;
+  }
+  form a {
+    @apply text-base;
+  }
+}
+@media (min-height: 900px) {
+  form {
+    @apply space-y-6;
   }
 }
 </style>
