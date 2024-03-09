@@ -43,7 +43,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="login-container" class="flex flex-1 flex-col items-center justify-around p-4 max-w-5xl w-full lg:px-0">
+  <div
+    id="login-container"
+    class="flex flex-1 flex-col items-center justify-around p-4 max-w-5xl w-full lg:px-0"
+  >
     <div class="absolute top-0 right-0 pt-3 pr-3">
       <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
         <HomeIcon class="h-8 w-8" />
@@ -51,10 +54,10 @@ onMounted(async () => {
     </div>
     <div id="logo-container" class="w-full py-4 lg:py-20">
       <div class="w-full flex items-center justify-center">
-        <img id="logo-img"
+        <img
+          id="logo-img"
           :src="truckLogo"
           alt="Logo: A catering truck with a chef's hat on top of it"
-
         />
       </div>
     </div>

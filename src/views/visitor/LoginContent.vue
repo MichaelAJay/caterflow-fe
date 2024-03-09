@@ -64,7 +64,6 @@ const handleForgotPassword = () => {
   console.log('forgot password clicked');
 };
 
-
 function failedLogin(user: User | { failed: string }): user is { failed: string } {
   return (user as { failed: string }).failed !== undefined;
 }
