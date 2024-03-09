@@ -88,9 +88,7 @@ onMounted(async () => {
         <HomeIcon class="h-8 w-8" />
       </button>
     </div>
-    <div
-      class="flex-1 p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex flex-col"
-    >
+    <div class="flex-1 p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex flex-col">
       <!-- Card -->
       <form @submit.prevent="handleLogin" class="space-y-3 sm:space-y-4 md:space-y-6">
         <div>
@@ -151,7 +149,7 @@ onMounted(async () => {
 <style scoped>
 @media (min-height: 805px) {
   form {
-    @apply space-y-4
+    @apply space-y-4;
   }
   form label {
     @apply text-lg mb-1;
@@ -165,7 +163,7 @@ onMounted(async () => {
 }
 @media (min-height: 900px) {
   form {
-    @apply space-y-6
+    @apply space-y-6;
   }
 }
 </style>
