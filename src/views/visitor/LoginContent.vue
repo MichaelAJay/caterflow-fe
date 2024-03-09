@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import ErrorAlert from '@/components/ErrorAlert.vue';
 import FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
-import { EyeIcon, EyeSlashIcon, HomeIcon } from '@heroicons/vue/24/outline';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline';
 import { getUser, login } from '@/services/firestoreAuth';
 import router from '@/router';
 import type { User } from 'firebase/auth';
@@ -64,9 +64,6 @@ const handleForgotPassword = () => {
   console.log('forgot password clicked');
 };
 
-const handleHomeClick = () => {
-  router.push({ name: 'home' });
-};
 
 function failedLogin(user: User | { failed: string }): user is { failed: string } {
   return (user as { failed: string }).failed !== undefined;
@@ -83,11 +80,6 @@ onMounted(async () => {
 
 <template>
   <div id="login-content" class="flex-1 flex flex-col items-center">
-    <div class="absolute top-0 right-0 pt-3 pr-3">
-      <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
-        <HomeIcon class="h-8 w-8" />
-      </button>
-    </div>
     <div class="flex-1 p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex flex-col">
       <!-- Card -->
       <form @submit.prevent="handleLogin" class="space-y-3 sm:space-y-4 md:space-y-6">

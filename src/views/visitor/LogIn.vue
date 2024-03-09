@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import ErrorAlert from '@/components/ErrorAlert.vue';
 import FinishOnboardingPrompt from '../user/FinishOnboardingPromptModal.vue';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline';
+import { HomeIcon } from '@heroicons/vue/24/outline';
 import { useScreenStore } from '@/stores/screen';
 import { getUser } from '@/services/firestoreAuth';
 import router from '@/router';
@@ -10,7 +10,7 @@ import ComingSoon from '@/components/visitor/ComingSoon.vue';
 import LoginContent from './LoginContent.vue';
 import truckLogo from '../../assets/CF_logo_vector.svg';
 
-defineExpose({ EyeIcon, EyeSlashIcon, ErrorAlert, FinishOnboardingPrompt });
+defineExpose({ ErrorAlert, FinishOnboardingPrompt });
 
 // Initialize stores
 const screenStore = useScreenStore();
@@ -25,6 +25,10 @@ const showSplitContent = computed<boolean>(
 );
 
 // Functions
+const handleHomeClick = () => {
+  router.push({ name: 'home' });
+};
+
 const closeModal = () => {
   showFinishOnboardingPrompt.value = false;
 };
@@ -39,13 +43,20 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="login-container" class="flex flex-1 flex-col items-center justify-around p-4">
-    <div id="logo-container" class="flex items-center justify-center py-4 lg:py-20">
-      <img
-        :src="truckLogo"
-        alt="Logo: A catering truck with a chef's hat on top of it"
-        class="h-28 lg:h-36"
-      />
+  <div id="login-container" class="flex flex-1 flex-col items-center justify-around p-4 max-w-5xl w-full lg:px-0">
+    <div class="absolute top-0 right-0 pt-3 pr-3">
+      <button @click="handleHomeClick" class="text-caramel-500 hover:text-caramel-600">
+        <HomeIcon class="h-8 w-8" />
+      </button>
+    </div>
+    <div id="logo-container" class="w-full py-4 lg:py-20">
+      <div class="w-full flex items-center justify-center">
+        <img id="logo-img"
+          :src="truckLogo"
+          alt="Logo: A catering truck with a chef's hat on top of it"
+
+        />
+      </div>
     </div>
     <h2 class="text-2xl md:text-4xl font-light text-accents-500">Welcome Back!</h2>
     <div
@@ -68,7 +79,7 @@ onMounted(async () => {
 #logo-container {
   @apply py-3; /* Base vertical padding */
 }
-#logo-container img {
+#logo-img {
   @apply h-28; /* Base logo size */
 }
 
@@ -95,8 +106,13 @@ onMounted(async () => {
   #login-sections {
     @apply py-8;
   }
-  #logo-container img {
-    @apply h-36; /* Larger logo for larger screens */
+  #logo-img {
+    @apply h-36;
+  }
+}
+@media (min-height: 1000px) {
+  #logo-img {
+    @apply h-44;
   }
 }
 </style>
