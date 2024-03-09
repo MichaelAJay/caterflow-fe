@@ -47,7 +47,7 @@ onMounted(async () => {
         class="h-28 lg:h-36"
       />
     </div>
-    <h2 class="text-2xl font-light text-accents-500">Welcome Back!</h2>
+    <h2 class="text-2xl md:text-4xl font-light text-accents-500">Welcome Back!</h2>
     <div
       id="login-sections"
       class="flex w-full min-h-full flex-col items-center justify-center lg:flex-row lg:items-stretch lg:justify-around space-y-4 lg:space-y-0"
