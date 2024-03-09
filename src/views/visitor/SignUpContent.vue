@@ -80,7 +80,7 @@ const focusHandler = () => ensureInView('last-check');
 </script>
 
 <template>
-  <div id="signup-container" class="flex-1 flex flex-col items-center">
+  <div id="signup-content" class="flex-1 flex flex-col items-center">
     <div class="flex-1 p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex flex-col">
       <div class="p-6 max-w-md w-full bg-white rounded-xl shadow-md">
         <form @submit.prevent="handleSignUp" class="space-y-3 sm:space-y-4 md:space-y-6">
