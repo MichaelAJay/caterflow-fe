@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import {
-  CheckCircleIcon,
-  XCircleIcon,
-  EyeIcon,
-  EyeSlashIcon,
-  HomeIcon
-} from '@heroicons/vue/24/outline';
+import { HomeIcon } from '@heroicons/vue/24/outline';
 import { ensureInView } from '../../utility/functions/useEnsureVisible';
 import ErrorAlert from '@/components/ErrorAlert.vue';
 import { signUpUser, updateUser } from '@/services/firestoreAuth';
@@ -15,8 +9,12 @@ import router from '@/router';
 import { apiLogin } from '@/services/apiService';
 import SignUpContent from './SignUpContent.vue';
 import truckLogo from '../../assets/CF_logo_vector.svg';
+import { useScreenStore } from '@/stores/screen';
 
-defineExpose({ CheckCircleIcon, XCircleIcon, EyeIcon, EyeSlashIcon, ErrorAlert });
+defineExpose({ ErrorAlert });
+
+// Initialize stores
+const screenStore = useScreenStore();
 
 // Refs
 const form = ref({
@@ -66,24 +64,6 @@ const handleHomeClick = () => {
   router.push({ name: 'home' });
 };
 
-const togglePasswordVisibility = () => {
-  passwordVisible.value = !passwordVisible.value;
-};
-
-const handleSignUp = async () => {
-  const { email, password, name } = { ...form.value };
-  try {
-    await signUpUser(email, password);
-    await updateUser({ displayName: name });
-    await apiLogin();
-    router.push({ name: 'Onboard Wizard' });
-  } catch (err: any) {
-    showError.value = true;
-    errorMessage.value = 'An error occurred during account creation.';
-  }
-};
-
-const focusHandler = () => ensureInView('last-check');
 </script>
 
 <template>
@@ -110,6 +90,7 @@ const focusHandler = () => ensureInView('last-check');
       id="signup-sections"
       class="flex w-full min-h-full flex-col items-center justify-center lg:flex-row lg:items-stretch lg:justify-around space-y-4 lg:space-y-0"
     >
+      <div></div>
       <SignUpContent />
     </div>
     <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
