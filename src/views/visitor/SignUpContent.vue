@@ -1,19 +1,13 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import {
-  CheckCircleIcon,
-  XCircleIcon,
-  EyeIcon,
-  EyeSlashIcon,
-} from '@heroicons/vue/24/outline';
+import { computed, ref, watch } from 'vue';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline';
 import { ensureInView } from '../../utility/functions/useEnsureVisible';
 import ErrorAlert from '@/components/ErrorAlert.vue';
 import { signUpUser, updateUser } from '@/services/firestoreAuth';
 import { passwordRules } from '@/views/visitor/utility/password-rules.const';
 import router from '@/router';
 import { apiLogin } from '@/services/apiService';
-
-defineExpose({ CheckCircleIcon, XCircleIcon, EyeIcon, EyeSlashIcon, HomeIcon, ErrorAlert });
+import PasswordCheckModal from './PasswordCheckModal.vue';
 
 // Refs
 const form = ref({
@@ -37,6 +31,9 @@ const validPasswordError = ref('');
 const matchPasswordError = ref('');
 const showError = ref(false);
 const errorMessage = ref('');
+const isPasswordModalVisible = ref(false);
+
+const isPasswordValid = computed(() => Object.values(checks).every(Boolean));
 
 // Watches
 watch(
@@ -76,97 +73,103 @@ const handleSignUp = async () => {
   }
 };
 
+const handleClickSubmit = () => {
+  console.log('handleClickSubmit');
+  if (!isPasswordValid.value) {
+    isPasswordModalVisible.value = true;
+  }
+};
+
+const handleHover = () => {
+  console.log('on hover');
+  if (!isPasswordValid.value) {
+    isPasswordModalVisible.value = true;
+  }
+};
+
+const closePasswordModal = () => {
+  isPasswordModalVisible.value = false;
+};
+
 const focusHandler = () => ensureInView('last-check');
 </script>
 
 <template>
   <div id="signup-content" class="flex-1 flex flex-col items-center">
     <div class="flex-1 p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex flex-col">
-      <div class="p-6 max-w-md w-full bg-white rounded-xl shadow-md">
-        <form @submit.prevent="handleSignUp" class="space-y-3 sm:space-y-4 md:space-y-6">
-          <div>
-            <label for="owner" class="form-label">Name:</label>
-            <input id="owner" v-model="form.name" type="text" required class="form-input" />
-          </div>
-          <div>
-            <label for="email" class="form-label">Email:</label>
-            <input id="email" v-model="form.email" type="email" required class="form-input" />
-          </div>
-          <div>
-            <label for="password" class="form-label">Password:</label>
-            <div class="relative">
-              <input
-                id="password"
-                v-model="form.password"
-                :type="passwordVisible ? 'text' : 'password'"
-                required
-                class="form-input"
-                @focus="focusHandler"
-              />
-              <button
-                type="button"
-                @click="togglePasswordVisibility"
-                class="absolute inset-y-0 right-0 px-2 py-1"
-                tabindex="-1"
-              >
-                <EyeIcon v-if="!passwordVisible" class="h-5 w-5 text-gray-500" />
-                <EyeSlashIcon v-else class="h-5 w-5 text-gray-500" />
-              </button>
-            </div>
-          </div>
-          <div>
-            <label for="password-confirm" class="form-label">Confirm Password:</label>
+      <form @submit.prevent="handleSignUp" class="space-y-3 sm:space-y-4 md:space-y-6">
+        <div>
+          <label for="owner" class="form-label">Name:</label>
+          <input
+            id="owner"
+            v-model="form.name"
+            type="text"
+            required
+            class="w-full px-3 py-2 border rounded-md"
+          />
+        </div>
+        <div>
+          <label for="email" class="form-label">Email:</label>
+          <input
+            id="email"
+            v-model="form.email"
+            type="email"
+            required
+            class="w-full px-3 py-2 border rounded-md"
+          />
+        </div>
+        <div>
+          <label for="password" class="form-label">Password:</label>
+          <div class="relative">
             <input
-              id="password-confirm"
-              v-model="form['password-confirm']"
+              id="password"
+              v-model="form.password"
               :type="passwordVisible ? 'text' : 'password'"
               required
-              class="form-input"
+              class="w-full px-3 py-2 border rounded-md"
               @focus="focusHandler"
             />
+            <button
+              type="button"
+              @click="togglePasswordVisibility"
+              class="absolute inset-y-0 right-0 px-2 py-1"
+              tabindex="-1"
+            >
+              <EyeIcon v-if="!passwordVisible" class="h-5 w-5 text-gray-500" />
+              <EyeSlashIcon v-else class="h-5 w-5 text-gray-500" />
+            </button>
           </div>
+        </div>
+        <div>
+          <label for="password-confirm" class="form-label">Confirm Password:</label>
+          <input
+            id="password-confirm"
+            v-model="form['password-confirm']"
+            :type="passwordVisible ? 'text' : 'password'"
+            required
+            class="w-full px-3 py-2 border rounded-md"
+            @focus="focusHandler"
+          />
+        </div>
+        <div @click="handleClickSubmit" @mouseover="handleHover">
           <button
             type="submit"
-            :disabled="!Object.values(checks).every(Boolean)"
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-caramel-600 hover:bg-caramel-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            :disabled="!isPasswordValid"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-caramel-600 hover:bg-caramel-700 disabled:opacity-25 disabled:cursor-not-allowed"
+            :class="{ 'pointer-events-none': !isPasswordValid }"
+            @mouseover="handleHover"
+            @mouseleave="closePasswordModal"
           >
             Sign Up
           </button>
-        </form>
-        <ul class="pt-1">
-          <li class="text-gray-700">
-            <CheckCircleIcon v-if="checks.minLength" class="h-5 w-5 inline-block text-green-500" />
-            <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
-            At least 8 characters
-          </li>
-          <li class="text-gray-700">
-            <CheckCircleIcon v-if="checks.hasNumber" class="h-5 w-5 inline-block text-green-500" />
-            <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
-            Contains a number
-          </li>
-          <li class="text-gray-700">
-            <CheckCircleIcon v-if="checks.hasUpper" class="h-5 w-5 inline-block text-green-500" />
-            <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
-            Contains an uppercase letter
-          </li>
-          <li class="text-gray-700">
-            <CheckCircleIcon v-if="checks.hasLower" class="h-5 w-5 inline-block text-green-500" />
-            <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
-            Contains a lowercase letter
-          </li>
-          <li class="text-gray-700">
-            <CheckCircleIcon v-if="checks.hasSpecial" class="h-5 w-5 inline-block text-green-500" />
-            <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
-            Contains a special character
-          </li>
-          <li id="last-check" class="text-gray-700">
-            <CheckCircleIcon v-if="checks.matches" class="h-5 w-5 inline-block text-green-500" />
-            <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
-            Matches confirmation
-          </li>
-        </ul>
-      </div>
+        </div>
+      </form>
     </div>
+    <PasswordCheckModal
+      :isVisible="isPasswordModalVisible"
+      @close="closePasswordModal"
+      :checks="checks"
+    />
     <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
   </div>
 </template>

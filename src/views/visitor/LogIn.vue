@@ -72,6 +72,7 @@ onMounted(async () => {
 
       <LoginContent class="w-full" :class="{ 'lg:w-1/2': showSplitContent }" />
 
+      <!-- These should probably not be in login section -->
       <FinishOnboardingPrompt :show="showFinishOnboardingPrompt" :closeModal="closeModal" />
       <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
     </div>

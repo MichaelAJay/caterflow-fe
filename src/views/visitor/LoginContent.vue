@@ -31,6 +31,7 @@ const togglePasswordVisibility = () => {
 };
 
 const handleLogin = async () => {
+  console.log('login event handler');
   const { email, password } = { ...form.value };
 
   try {
@@ -117,7 +118,7 @@ onMounted(async () => {
             id="login-button"
             type="submit"
             :disabled="!isInputValid"
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-caramel-600 hover:bg-caramel-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-caramel-600 hover:bg-caramel-700 disabled:opacity-25 disabled:cursor-not-allowed"
           >
             Log In
           </button>
