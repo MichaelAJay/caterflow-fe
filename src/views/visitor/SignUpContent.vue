@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, type Ref } from 'vue';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline';
 import { ensureInView } from '../../utility/functions/useEnsureVisible';
 import ErrorAlert from '@/components/ErrorAlert.vue';
@@ -10,6 +10,11 @@ import { apiLogin } from '@/services/apiService';
 import PasswordCheckModal from './PasswordCheckModal.vue';
 
 // Refs
+const signUpButton: Ref<HTMLElement | null> = ref(null);
+const signUpContent: Ref<HTMLElement | null> = ref(null);
+const passwordCheckModal: Ref<HTMLElement | null> = ref(null);
+const modalStyle = ref({});
+
 const form = ref({
   name: '',
   email: '',
@@ -34,8 +39,22 @@ const errorMessage = ref('');
 const isPasswordModalVisible = ref(false);
 
 const isPasswordValid = computed(() => Object.values(checks).every(Boolean));
+const updateModalPosition = () => {
+  if (!signUpButton.value || !passwordCheckModal.value||!signUpContent.value || !isPasswordModalVisible.value) return;
+
+  const buttonRect = signUpButton.value.getBoundingClientRect();
+
+  modalStyle.value = {
+    position: 'absolute',
+    top: `${buttonRect}px`,
+    left: '50%',
+    transform: 'translateX(-50%) translateY(-300px)'
+  };
+};
 
 // Watches
+watch(isPasswordModalVisible, updateModalPosition);
+
 watch(
   () => form.value.password,
   (newPassword) => {
@@ -95,7 +114,7 @@ const focusHandler = () => ensureInView('last-check');
 </script>
 
 <template>
-  <div id="signup-content" class="flex-1 flex flex-col items-center">
+  <div id="signup-content" class="flex-1 flex flex-col items-center" ref="signUpContent">
     <div class="flex-1 p-5 sm:p-6 max-w-md w-full bg-white rounded-xl shadow-md flex flex-col">
       <form @submit.prevent="handleSignUp" class="space-y-3 sm:space-y-4 md:space-y-6">
         <div>
@@ -151,7 +170,7 @@ const focusHandler = () => ensureInView('last-check');
             @focus="focusHandler"
           />
         </div>
-        <div @click="handleClickSubmit" @mouseover="handleHover">
+        <div @click="handleClickSubmit" @mouseover="handleHover" class="relative" ref="signUpButton">
           <button
             type="submit"
             :disabled="!isPasswordValid"
@@ -162,14 +181,17 @@ const focusHandler = () => ensureInView('last-check');
           >
             Sign Up
           </button>
+          <PasswordCheckModal
+            :style="modalStyle"
+            :isVisible="isPasswordModalVisible"
+            @close="closePasswordModal"
+            :checks="checks"
+            ref="passwordCheckModal"
+          />
         </div>
       </form>
     </div>
-    <PasswordCheckModal
-      :isVisible="isPasswordModalVisible"
-      @close="closePasswordModal"
-      :checks="checks"
-    />
+
     <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
   </div>
 </template>

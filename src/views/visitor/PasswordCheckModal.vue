@@ -18,10 +18,7 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div
-    v-if="isVisible"
-    class="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center"
-  >
+  <div v-if="isVisible" class="flex justify-center items-center">
     <div class="bg-white p-4 rounded-lg max-w-md">
       <div class="flex justify-between items-center mb-2">
         <h2 class="text-lg font-semibold">Password Requirements</h2>

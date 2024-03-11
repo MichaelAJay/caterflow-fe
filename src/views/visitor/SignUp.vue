@@ -68,7 +68,6 @@ watch(
 const handleHomeClick = () => {
   router.push({ name: 'home' });
 };
-
 </script>
 
 <template>
@@ -95,7 +94,7 @@ const handleHomeClick = () => {
       id="signup-sections"
       class="flex w-full min-h-full flex-col items-center justify-center lg:flex-row lg:items-stretch lg:justify-around space-y-4 lg:space-y-0"
     >
-    <div v-if="showSplitContent" class="flex-1 flex flex-col w-full lg:w-1/2">
+      <div v-if="showSplitContent" class="flex-1 flex flex-col w-full lg:w-1/2">
         <SignUpGreetings />
       </div>
       <SignUpContent />
