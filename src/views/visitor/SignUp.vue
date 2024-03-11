@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { HomeIcon } from '@heroicons/vue/24/outline';
 import { ensureInView } from '../../utility/functions/useEnsureVisible';
 import ErrorAlert from '@/components/ErrorAlert.vue';
@@ -10,6 +10,7 @@ import { apiLogin } from '@/services/apiService';
 import SignUpContent from './SignUpContent.vue';
 import truckLogo from '../../assets/CF_logo_vector.svg';
 import { useScreenStore } from '@/stores/screen';
+import SignUpGreetings from './SignUpGreetings.vue';
 
 defineExpose({ ErrorAlert });
 
@@ -38,6 +39,10 @@ const validPasswordError = ref('');
 const matchPasswordError = ref('');
 const showError = ref(false);
 const errorMessage = ref('');
+
+const showSplitContent = computed<boolean>(
+  () => screenStore.orientation === 'landscape' && screenStore.isTabletOrLarger
+);
 
 // Watches
 watch(
@@ -90,7 +95,9 @@ const handleHomeClick = () => {
       id="signup-sections"
       class="flex w-full min-h-full flex-col items-center justify-center lg:flex-row lg:items-stretch lg:justify-around space-y-4 lg:space-y-0"
     >
-      <div></div>
+    <div v-if="showSplitContent" class="flex-1 flex flex-col w-full lg:w-1/2">
+        <SignUpGreetings />
+      </div>
       <SignUpContent />
     </div>
     <ErrorAlert :message="errorMessage" v-model:isVisible="showError" />
