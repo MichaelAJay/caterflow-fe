@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, watch, type Ref } from 'vue';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/outline';
+import { computed, ref, watch, type Ref, reactive } from 'vue';
+import { EyeIcon, EyeSlashIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/outline';
 import { ensureInView } from '../../utility/functions/useEnsureVisible';
 import ErrorAlert from '@/components/ErrorAlert.vue';
 import { signUpUser, updateUser } from '@/services/firestoreAuth';
@@ -22,7 +22,7 @@ const form = ref({
   'password-confirm': ''
 });
 
-const checks = ref({
+const checks = reactive({
   minLength: false,
   hasNumber: false,
   hasUpper: false,
@@ -39,8 +39,16 @@ const errorMessage = ref('');
 const isPasswordModalVisible = ref(false);
 
 const isPasswordValid = computed(() => Object.values(checks).every(Boolean));
+
+
 const updateModalPosition = () => {
-  if (!signUpButton.value || !passwordCheckModal.value||!signUpContent.value || !isPasswordModalVisible.value) return;
+  if (
+    !signUpButton.value ||
+    !passwordCheckModal.value ||
+    !signUpContent.value ||
+    !isPasswordModalVisible.value
+  )
+    return;
 
   const buttonRect = signUpButton.value.getBoundingClientRect();
 
@@ -58,19 +66,19 @@ watch(isPasswordModalVisible, updateModalPosition);
 watch(
   () => form.value.password,
   (newPassword) => {
-    checks.value.minLength = newPassword.length >= passwordRules.minLength;
-    checks.value.hasNumber = passwordRules.hasNumber.test(newPassword);
-    checks.value.hasUpper = passwordRules.hasUpper.test(newPassword);
-    checks.value.hasLower = passwordRules.hasLower.test(newPassword);
-    checks.value.hasSpecial = passwordRules.hasSpecial.test(newPassword);
-    checks.value.matches = newPassword === form.value['password-confirm'];
+    checks.minLength = newPassword.length >= passwordRules.minLength;
+    checks.hasNumber = passwordRules.hasNumber.test(newPassword);
+    checks.hasUpper = passwordRules.hasUpper.test(newPassword);
+    checks.hasLower = passwordRules.hasLower.test(newPassword);
+    checks.hasSpecial = passwordRules.hasSpecial.test(newPassword);
+    checks.matches = newPassword === form.value['password-confirm'];
   }
 );
 
 watch(
   () => form.value['password-confirm'],
   (newConfirmPassword) => {
-    checks.value.matches = newConfirmPassword === form.value.password;
+    checks.matches = newConfirmPassword === form.value.password;
   }
 );
 
@@ -82,10 +90,11 @@ const togglePasswordVisibility = () => {
 const handleSignUp = async () => {
   const { email, password, name } = { ...form.value };
   try {
-    await signUpUser(email, password);
-    await updateUser({ displayName: name });
-    await apiLogin();
-    router.push({ name: 'Onboard Wizard' });
+    console.log('handleSignUp reached')
+    // await signUpUser(email, password);
+    // await updateUser({ displayName: name });
+    // await apiLogin();
+    // router.push({ name: 'Onboard Wizard' });
   } catch (err: any) {
     showError.value = true;
     errorMessage.value = 'An error occurred during account creation.';
@@ -100,7 +109,6 @@ const handleClickSubmit = () => {
 };
 
 const handleHover = () => {
-  console.log('on hover');
   if (!isPasswordValid.value) {
     isPasswordModalVisible.value = true;
   }
@@ -138,7 +146,12 @@ const focusHandler = () => ensureInView('last-check');
           />
         </div>
         <div>
-          <label for="password" class="form-label">Password:</label>
+          <label for="password" class="form-label">
+            Password:
+            <button type="button" @click.stop="isPasswordModalVisible = true" class="ml-1">
+              <QuestionMarkCircleIcon class="h-4 w-4 mb-1 inline-block" />
+            </button>
+          </label>
           <div class="relative">
             <input
               id="password"
@@ -170,7 +183,12 @@ const focusHandler = () => ensureInView('last-check');
             @focus="focusHandler"
           />
         </div>
-        <div @click="handleClickSubmit" @mouseover="handleHover" class="relative" ref="signUpButton">
+        <div
+          @click="() => {!isPasswordValid && handleClickSubmit}"
+          @mouseover="handleHover"
+          class="relative"
+          ref="signUpButton"
+        >
           <button
             type="submit"
             :disabled="!isPasswordValid"

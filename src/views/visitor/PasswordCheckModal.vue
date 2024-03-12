@@ -9,24 +9,26 @@ const props = defineProps({
 });
 
 // Define emits
-const emits = defineEmits(['close']);
+const emit = defineEmits(['close']);
 
 // Methods
 const closeModal = () => {
-  emits('close');
+  console.log('closeModal clicked');
+  emit('close');
 };
 </script>
 
 <template>
   <div v-if="isVisible" class="flex justify-center items-center">
-    <div class="bg-white p-4 rounded-lg max-w-md">
+    <div class="bg-white p-4 rounded-lg min-w-[350px] max-w-md">
       <div class="flex justify-between items-center mb-2">
         <h2 class="text-lg font-semibold">Password Requirements</h2>
-        <button @click="closeModal" class="pl-4">
+        <button @click.stop="closeModal" class="pl-4">
           <XMarkIcon class="h-5 w-5" />
         </button>
       </div>
-      <ul class="pt-1">
+      <p class="pt-1">Must contain:</p>
+      <ul class="grid grid-cols-2 gap-x-4 gap-y-2">
         <li class="text-gray-700">
           <CheckCircleIcon v-if="checks.minLength" class="h-5 w-5 inline-block text-green-500" />
           <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
@@ -35,29 +37,35 @@ const closeModal = () => {
         <li class="text-gray-700">
           <CheckCircleIcon v-if="checks.hasNumber" class="h-5 w-5 inline-block text-green-500" />
           <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
-          Contains a number
+          A number
         </li>
         <li class="text-gray-700">
           <CheckCircleIcon v-if="checks.hasUpper" class="h-5 w-5 inline-block text-green-500" />
           <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
-          Contains an uppercase letter
+          An uppercase letter
         </li>
         <li class="text-gray-700">
           <CheckCircleIcon v-if="checks.hasLower" class="h-5 w-5 inline-block text-green-500" />
           <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
-          Contains a lowercase letter
+          A lowercase letter
         </li>
         <li class="text-gray-700">
           <CheckCircleIcon v-if="checks.hasSpecial" class="h-5 w-5 inline-block text-green-500" />
           <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
-          Contains a special character
-        </li>
-        <li id="last-check" class="text-gray-700">
-          <CheckCircleIcon v-if="checks.matches" class="h-5 w-5 inline-block text-green-500" />
-          <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
-          Matches confirmation
+          A special character (!@#$%^&*)
         </li>
       </ul>
+      <div id="last-check" class="text-gray-700 pt-2 text-xs">
+        <CheckCircleIcon v-if="checks.matches" class="h-5 w-5 inline-block text-green-500" />
+        <XCircleIcon v-else class="h-5 w-5 inline-block text-red-500" />
+        And must match "Confirm Password" value
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+ul li {
+  @apply text-xs;
+}
+</style>
