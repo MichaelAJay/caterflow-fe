@@ -47,7 +47,8 @@ const router = createRouter({
     {
       path: '/onboard',
       name: 'Onboard Wizard',
-      component: () => import('@/views/user/InitializeWizard/InitializeWizard.vue'),
+      // component: () => import('@/views/user/InitializeWizard/InitializeWizard.vue'),
+      component: () => import('@/views/user/InitializeWizard/InitializeStepper.vue'),
       meta: { hideFooter: true }
     }
   ]

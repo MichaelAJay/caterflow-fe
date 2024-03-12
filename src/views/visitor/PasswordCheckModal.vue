@@ -1,5 +1,4 @@
 <script setup>
-import { defineEmits } from 'vue';
 import { CheckCircleIcon, XCircleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 
 // Define props

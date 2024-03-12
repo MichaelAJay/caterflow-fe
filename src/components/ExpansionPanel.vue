@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, type PropType } from 'vue';
+
+export type ActionConfig = {
+  buttonDisplayName: string;
+  onClick: () => void;
+}
 
 const props = defineProps({
   titleName: String,
-  titleValue: String
+  titleValue: String,
+  actions: Array as PropType<ActionConfig[]>
 });
 
 const isOpen = ref(false);
@@ -30,9 +36,25 @@ const toggleOpen = () => {
         <span v-else>+</span>
       </span>
     </div>
-    <!-- Content -->
+    <!-- Content and actions -->
     <div v-show="isOpen" class="p-4">
-      <slot></slot>
+      <slot></slot> <!-- Default sltot for content -->
+      <div v-if="actions && actions.length" class="flex justify-end space-x-2 py-4 pr-2">
+        <button
+        v-for="action in actions"
+        :key="action.buttonDisplayName"
+        @click="action.onClick"
+        class="material-button"
+        >
+        {{ action.buttonDisplayName }}  
+      </button>
+      </div>
     </div>
   </div>
 </template>
+
+<style>
+.material-button {
+  @apply py-2 px-4
+}
+</style>
