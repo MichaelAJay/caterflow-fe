@@ -40,7 +40,7 @@ const nextStep = () => {
           <CheckCircleIcon class="h-5 w-5 text-green-500" />
         </div>
         <div v-else class="flex items-center justify-center h-6 w-6">
-            {{ index + 1 }}
+          {{ index + 1 }}
         </div>
       </div>
       <ExpansionPanel
