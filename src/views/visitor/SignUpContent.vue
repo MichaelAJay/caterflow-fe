@@ -32,14 +32,11 @@ const checks = reactive({
 });
 
 const passwordVisible = ref(false);
-const validPasswordError = ref('');
-const matchPasswordError = ref('');
 const showError = ref(false);
 const errorMessage = ref('');
 const isPasswordModalVisible = ref(false);
 
 const isPasswordValid = computed(() => Object.values(checks).every(Boolean));
-
 
 const updateModalPosition = () => {
   if (
@@ -90,11 +87,10 @@ const togglePasswordVisibility = () => {
 const handleSignUp = async () => {
   const { email, password, name } = { ...form.value };
   try {
-    console.log('handleSignUp reached')
-    // await signUpUser(email, password);
-    // await updateUser({ displayName: name });
-    // await apiLogin();
-    // router.push({ name: 'Onboard Wizard' });
+    await signUpUser(email, password);
+    await updateUser({ displayName: name });
+    await apiLogin();
+    router.push({ name: 'Onboard Wizard' });
   } catch (err: any) {
     showError.value = true;
     errorMessage.value = 'An error occurred during account creation.';
@@ -184,7 +180,11 @@ const focusHandler = () => ensureInView('last-check');
           />
         </div>
         <div
-          @click="() => {!isPasswordValid && handleClickSubmit}"
+          @click="
+            () => {
+              !isPasswordValid && handleClickSubmit;
+            }
+          "
           @mouseover="handleHover"
           class="relative"
           ref="signUpButton"

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { HomeIcon } from '@heroicons/vue/24/outline';
-import { ensureInView } from '../../utility/functions/useEnsureVisible';
 import ErrorAlert from '@/components/ErrorAlert.vue';
 import { signUpUser, updateUser } from '@/services/firestoreAuth';
 import { passwordRules } from '@/views/visitor/utility/password-rules.const';
@@ -34,9 +33,6 @@ const checks = ref({
   matches: false
 });
 
-const passwordVisible = ref(false);
-const validPasswordError = ref('');
-const matchPasswordError = ref('');
 const showError = ref(false);
 const errorMessage = ref('');
 

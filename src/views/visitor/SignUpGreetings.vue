@@ -2,7 +2,11 @@
 import { ref } from 'vue';
 
 const steps = ref(['Create user account', 'Verify email', 'Add company name']);
-const benefits = ref(['Set up key integrations', 'Sync your menus between integrations', 'Start saving time with CaterFlow!'])
+const benefits = ref([
+  'Set up key integrations',
+  'Sync your menus between integrations',
+  'Start saving time with CaterFlow!'
+]);
 </script>
 
 <template>
