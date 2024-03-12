@@ -64,7 +64,7 @@ export default defineComponent({
 <template>
   <div class="flex flex-col md:flex-row">
     <Stepper
-      :steps="steps"
+      :steps="steps.map((step) => step.name)"
       :currentStep="currentStep"
       :isNavigable="allowStepperNavigation"
       @navigate="handleStepperNavigation"

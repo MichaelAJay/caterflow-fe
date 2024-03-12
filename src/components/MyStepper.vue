@@ -26,5 +26,6 @@ export default {
     >
       {{ stepName }}
     </div>
+    Booty butt
   </nav>
 </template>

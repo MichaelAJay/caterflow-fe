@@ -87,9 +87,9 @@ const togglePasswordVisibility = () => {
 const handleSignUp = async () => {
   const { email, password, name } = { ...form.value };
   try {
-    await signUpUser(email, password);
-    await updateUser({ displayName: name });
-    await apiLogin();
+    // await signUpUser(email, password);
+    // await updateUser({ displayName: name });
+    // await apiLogin();
     router.push({ name: 'Onboard Wizard' });
   } catch (err: any) {
     showError.value = true;

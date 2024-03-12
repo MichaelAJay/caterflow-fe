@@ -2,10 +2,8 @@
 import { computed, ref, watch } from 'vue';
 import { HomeIcon } from '@heroicons/vue/24/outline';
 import ErrorAlert from '@/components/ErrorAlert.vue';
-import { signUpUser, updateUser } from '@/services/firestoreAuth';
 import { passwordRules } from '@/views/visitor/utility/password-rules.const';
 import router from '@/router';
-import { apiLogin } from '@/services/apiService';
 import SignUpContent from './SignUpContent.vue';
 import truckLogo from '../../assets/CF_logo_vector.svg';
 import { useScreenStore } from '@/stores/screen';
