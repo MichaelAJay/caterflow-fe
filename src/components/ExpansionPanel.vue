@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, nextTick, defineProps, defineEmits } from 'vue';
+import { ref, watch, onMounted, nextTick, defineProps, defineEmits, type PropType } from 'vue';
 
 export type ActionConfig = {
   buttonDisplayName: string;
@@ -32,10 +32,14 @@ watch(() => props.isOpen, async (isOpen) => {
   }
 });
 
-onMounted(() => {
-  if (titleBarRef.value) {
-    // Set initial max-height to title bar height
-    maxHeight.value = `${titleBarRef.value.clientHeight}px`;
+onMounted(async () => {
+  await nextTick();
+  if (titleBarRef.value && contentRef.value) {
+    if (props.isOpen) {
+      maxHeight.value = `${contentRef.value.scrollHeight + titleBarRef.value.clientHeight}px`;
+    } else {
+      maxHeight.value = `${titleBarRef.value.clientHeight}px`;
+    }
   }
 });
 
@@ -47,7 +51,7 @@ const toggleOpen = () => {
 <template>
   <div class="expansion-panel-container" :style="{ maxHeight: maxHeight, transition: 'max-height 0.3s ease' }">
     <!-- Title Bar -->
-    <div ref="titleBarRef" @click="toggleOpen" class="flex items-center justify-between py-3 cursor-pointer" :class="{ 'bg-gray-100': isOpen, 'bg-white': !isOpen }" :aria-expanded="isOpen.toString()">
+    <div ref="titleBarRef" @click="toggleOpen" class="flex items-center justify-between py-3 cursor-pointer" :class="{ 'bg-gray-100': isOpen, 'bg-white': !isOpen }" :aria-expanded="isOpen">
       <div class="flex items-center space-x-4">
         <span class="pl-6">{{ titleName }}</span>
         <span>{{ titleValue }}</span>
