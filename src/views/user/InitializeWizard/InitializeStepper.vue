@@ -44,7 +44,7 @@ const handleCompletion = () => {
 </script>
 
 <template>
-  <div>
+  <div id="initialize-stepper" class="px-4 w-full">
     <CustomStepper ref="stepper" :steps="steps" :showDefaultControls="false" />
   </div>
 </template>

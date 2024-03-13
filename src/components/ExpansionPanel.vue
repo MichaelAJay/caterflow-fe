@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type PropType } from 'vue';
+import {  ref, type PropType, onMounted, watch } from 'vue';
 
 export type ActionConfig = {
   buttonDisplayName: string;
@@ -9,26 +9,45 @@ export type ActionConfig = {
 const props = defineProps({
   titleName: String,
   titleValue: String,
-  actions: Array as PropType<ActionConfig[]>
+  actions: Array as PropType<ActionConfig[]>,
+  isOpen: Boolean,
 });
 
-const isOpen = ref(false);
+const emit = defineEmits(['toggle'])
 const toggleOpen = () => {
-  isOpen.value = !isOpen.value;
+  console.log('toggleOpen')
+  emit('toggle')
 };
+
+watch(() => props.isOpen, (newIsOpen: boolean) => {
+  if (titleBarRef.value) {
+    maxHeight.value = newIsOpen ? "1000px" : `${titleBarRef.value.clientHeight}px`
+  }
+})
+
+const titleBarRef = ref<HTMLElement | null>(null);
+const maxHeight = ref("0px")
+onMounted(() => {
+  if (titleBarRef.value) {
+    const titleBarHeight = titleBarRef.value.clientHeight;
+    console.log('title bar height', titleBarHeight)
+    maxHeight.value = `${titleBarHeight}px`
+  }
+})
 </script>
 
 <template>
-  <div>
+  <div class="expansion-panel-container" :style="{ maxHeight: maxHeight }">
     <!-- Title Bar -->
     <div
+    ref="titleBarRef"
       @click="toggleOpen"
-      class="flex items-center justify-between px-6 py-3 cursor-pointer"
+      class="flex items-center justify-between py-3 cursor-pointer"
       :class="{ 'bg-gray-100': isOpen, 'bg-white': !isOpen }"
       :aria-expanded="isOpen"
     >
       <div class="flex items-center space-x-4">
-        <span>{{ titleName }}</span>
+        <span class="pl-6">{{ titleName }}</span>
         <span>{{ titleValue }}</span>
       </div>
       <span class="icon">
@@ -38,7 +57,7 @@ const toggleOpen = () => {
     </div>
     <!-- Content and actions -->
     <div v-show="isOpen" class="p-4">
-      <slot></slot> <!-- Default sltot for content -->
+      <slot></slot>
       <div v-if="actions && actions.length" class="flex justify-end space-x-2 py-4 pr-2">
         <button
         v-for="action in actions"
@@ -56,5 +75,9 @@ const toggleOpen = () => {
 <style>
 .material-button {
   @apply py-2 px-4
+}
+.expansion-panel-container {
+  overflow: hidden;
+  transition: max-height 0.3s ease;
 }
 </style>

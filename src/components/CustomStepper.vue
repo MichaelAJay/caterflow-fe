@@ -22,7 +22,10 @@ const { steps } = props;
 const activeStep = ref(0);
 
 const handleToggle = (index: number) => {
-  if (activeStep.value !== index) {
+  console.log('handleToggle', index)
+  if (activeStep.value === index) {
+    activeStep.value = -1;
+  } else {
     activeStep.value = index;
   }
 };
@@ -42,37 +45,36 @@ const nextStep = () => {
       :key="index"
       class="step"
       :class="{
-        'pt-2': index !== 0,
-        'pb-2': true, // Not so sure about any of these.
         'mt-6': index === 0,
-        'mt-10': steps && index !== steps.length - 1 && index !== activeStep,
-        'mt-12': index === activeStep
+        'pb-10': steps && index !== steps.length - 1 && index !== activeStep,
+        'pb-12': steps && index === activeStep && index !== steps.length - 1
       }"
     >
-      <div class="inner-step">
-
-      </div>
-      <div class="flex items-center">
-        <div v-if="step.completed" class="flex items-center justify-center h-6 w-6">
-          <CheckCircleIcon class="h-5 w-5 text-green-500" />
+      <div class="inner-step flex items-center">
+        <div class="stepper-icon flex items-center">
+          <div v-if="step.completed" class="flex items-center justify-center h-6 w-6">
+            <CheckCircleIcon class="h-5 w-5 text-green-500" />
+          </div>
+          <div v-else class="flex items-center justify-center h-6 w-6">
+            {{ index + 1 }}
+          </div>
         </div>
-        <div v-else class="flex items-center justify-center h-6 w-6">
-          {{ index + 1 }}
+        <div class="step-content border border-caramel-500 flex-1">
+          <ExpansionPanel
+            :titleName="step.name"
+            :titleValue="step.description"
+            :isOpen="index === activeStep"
+            @toggle="handleToggle(index)"
+          >
+            <component :is="step.component" @change-step="() => {}" />
+          </ExpansionPanel>
+          <div
+            v-if="showDefaultControls && index === activeStep"
+            class="button-section pt-2 flex justify-end items-center h-12"
+          >
+            button section
+          </div>
         </div>
-      </div>
-      <ExpansionPanel
-        :titleName="step.name"
-        :titleValue="step.description"
-        :isOpen="index === activeStep"
-        @toggle="handleToggle(index)"
-      >
-        <component :is="step.component" @change-step="() => {}" />
-      </ExpansionPanel>
-      <div
-        v-if="showDefaultControls && index === activeStep"
-        class="button-section mt-2 flex justify-end items-center h-12"
-      >
-        button section
       </div>
     </div>
   </div>

@@ -19,7 +19,7 @@ const showFooter = computed(() => !route.meta.hideFooter);
 <template>
   <div id="app-container">
     <div id="content" class="bg-accents-100">
-      <div id="router-view-container" class="flex-1 p-4 sm:p-8 md:p-0 flex flex-col items-center">
+      <div id="router-view-container" class="flex-1 flex flex-col items-center">
         <RouterView />
       </div>
     </div>
