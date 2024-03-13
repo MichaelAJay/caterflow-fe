@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, nextTick, defineProps, defineEmits, type PropType } from 'vue';
+import { ref, watch, onMounted, nextTick, defineEmits, type PropType } from 'vue';
 
 export type ActionConfig = {
   buttonDisplayName: string;

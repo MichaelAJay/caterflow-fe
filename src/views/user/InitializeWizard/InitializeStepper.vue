@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { markRaw, ref } from 'vue';
 import VerifyEmailPrompt from './VerifyEmailPrompt.vue';
 import InitializeOrganization from './InitializeOrganization.vue';
 import AccountInitializedConfirmation from './AccountInitializedConfirmation.vue';
@@ -13,19 +13,19 @@ const steps = ref<Step[]>([
   {
     name: 'Verify Email',
     description: 'Verify your email',
-    component: VerifyEmailPrompt,
+    component: markRaw(VerifyEmailPrompt),
     completed: false
   },
   {
     name: 'Add Organization',
     description: 'Add an organization',
-    component: InitializeOrganization,
+    component: markRaw(InitializeOrganization),
     completed: false
   },
   {
     name: 'Confirmation',
     description: 'You are done!',
-    component: AccountInitializedConfirmation,
+    component: markRaw(AccountInitializedConfirmation),
     completed: false
   }
 ]);
